@@ -191,7 +191,7 @@
                      <th>Email</th>
                      <th>Position</th>
                      <th>City</th>
-                     <th>History</th>
+                     <!-- <th>History</th> -->
                      <th>View</th>
                      <th>Edit</th>
                      <th>Delete</th>
@@ -207,10 +207,10 @@
                     <td>{{$admin->job_title}}</td>
                     <td>{{$admin->city}}</td>
                     
-                    <td>
+                   <!--  <td>
                       <a href=""><button type="button" class="btn btn-light" title="History"><i class="zmdi zmdi-invert-colors"></i></button></a>
                       
-                    </td>
+                    </td> -->
                     <td>
                       <button type="submit" class="btn btn-light" style="float: left" data-toggle="modal" data-target="#show{{$admin->id}}" title="View"><i class="zmdi zmdi-eye"></i></button>
 

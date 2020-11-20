@@ -7,11 +7,14 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Comment;
 use App\Admin;
+use Illuminate\Support\Str;
+//Illuminate\Support\Str::slug($title);
 class AdminLoginController extends Controller
 {
 	public function __contruct()
 	{
 		$this->middleware('guest:admin',['except'=>['logout']]);
+        $slug = Str::slug('Laravel 5 Framework', '-');
 	}
     public function index()
     {
@@ -19,6 +22,7 @@ class AdminLoginController extends Controller
     }
     public function showLoginForm()
     {
+
     	return view('auth.admin_login');
     }
     public function login(Request $request)

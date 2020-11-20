@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -88,7 +89,11 @@ return [
 
     'prefix' => env(
         'CACHE_PREFIX',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_cache'
+        'AA'
+        //env('APP_NAME', 'laravel'), '_')
+        //Str::slug('your_string');
+
+
     ),
 
 ];

@@ -137,7 +137,7 @@ class AdminController extends Controller
             return view('admin.adminuser.adminuserlist',compact('adminlists','adminlistsall','s'));
         }abort(404,"Sorry");
   }
-  public function update($id,AdminRegisterFormRequest $request)
+  public function update($id,Request $request)
     {        
         $admin=Admin::whereId($id)->firstOrFail();
         if($admin->job_title == 'super_admin')
