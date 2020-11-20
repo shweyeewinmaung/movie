@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title','TrueNet')
+
 @section('stylesheet')
 <style type="text/css">
   .alerttext{
