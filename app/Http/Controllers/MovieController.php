@@ -13,6 +13,7 @@ use App\Http\Requests\MovieFormRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
+use App\Jobs\ConvertMovieforStreaming;
 
 class MovieController extends Controller
 {
@@ -237,7 +238,26 @@ class MovieController extends Controller
         { 
            $video_file=$request->file('video_file');
            $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           $video_file->move(public_path().'/images/movies/',$video_filename);       
+           //$video_file->move(public_path().'/images/movies/',$video_filename); 
+           $video_file->storeAs('/', $video_filename, 'uploads');
+
+           $movie=Movie::create([
+            'episode_name' =>  $request->get('episode_name'), 
+            'moviename_id' => $request->get('moviename_id'),
+            'season_number' => $request->get('season_number'),
+            'video_file' => $video_filename,
+            'disk' => 'uploads',
+           ]); 
+           ConvertMovieforStreaming::dispatch($movie);     
+        }
+        else
+        {
+           $movie=Movie::create([
+            'episode_name' =>  $request->get('episode_name'), 
+            'moviename_id' => $request->get('moviename_id'),
+            'season_number' => $request->get('season_number'),
+            'processed' => '2',                  
+          ]);
         }
         if($request->get('status'))
         {
@@ -246,12 +266,12 @@ class MovieController extends Controller
           $moviename->updated_at=Carbon::now()->timestamp;
           $moviename->update();
         }
-       $movies_table=Movie::create([
-            'episode_name' =>  $request->get('episode_name'), 
-            'moviename_id' => $request->get('moviename_id'),
-            'season_number' => $request->get('season_number'),
-            'video_file' => $video_filename,                  
-        ]);
+       // $movies_table=Movie::create([
+       //      'episode_name' =>  $request->get('episode_name'), 
+       //      'moviename_id' => $request->get('moviename_id'),
+       //      'season_number' => $request->get('season_number'),
+       //      'video_file' => $video_filename,                  
+       //  ]);
       // $validatedData = $request->validate([
       //           'subtitles.subtitle_file' => 'required|mimes:jpeg'
       //            ]); 
@@ -266,7 +286,7 @@ class MovieController extends Controller
                  $subtitle_filename=uniqid().'-'.$subtitle_file[$item]->getClientOriginalName();
                  $subtitle_file[$item]->move(public_path().'/images/subtitles/',$subtitle_filename);  
                  $data2=array(
-                 'movie_id'=> $movies_table->id,
+                 'movie_id'=> $movie->id,
                  'subtitle_name'=> $request->subtitle_name[$item],
                  'subtitle_file'=>$subtitle_filename
                  ); 
@@ -275,9 +295,9 @@ class MovieController extends Controller
           }           
         }
          Comment::create([
-            'content' => Auth::user()->name ." created Movie for Episode - ".$movies_table->episode_name."( Season - ".$movies_table->season_number.")",
+            'content' => Auth::user()->name ." created Movie for Episode - ".$movie->episode_name."( Season - ".$movie->season_number.")",
             'user_id' => Auth::user()->id,
-            'commendable_id' =>$movies_table->id ,
+            'commendable_id' =>$movie->id ,
             'commendable_type' => "movies"        
         ]);
         return redirect()->back()->with(['status'=> 'Successfully Saved Movie Upload']);      
@@ -317,12 +337,26 @@ class MovieController extends Controller
        $movie=Movie::whereId($id)->firstOrFail();
 
         if($request->hasFile('video_file'))
-        { 
+        {  
            $video_file=$request->file('video_file');
            $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           $video_file->move(public_path().'/images/movies/',$video_filename);       
+           $video_file->storeAs('/', $video_filename, 'uploads');
+ 
+           $movie->episode_name=$request->get('episode_name');
+           $movie->season_number=$request->get('season_number');
+           $movie->video_file=$video_filename;
+          
+           $movie->updated_at=Carbon::now()->timestamp;
+           $movie->update();
+           ConvertMovieforStreaming::dispatch($movie);            
         }
-        else{ $video_filename = $movie->video_file;}
+        else
+        { 
+           $movie->episode_name=$request->get('episode_name');
+           $movie->season_number=$request->get('season_number');
+           $movie->updated_at=Carbon::now()->timestamp;
+           $movie->update();
+        }
        
         if($request->get('status'))
         {
@@ -332,10 +366,8 @@ class MovieController extends Controller
           $moviename->update();
         }       
 
-        $movie->episode_name=$request->get('episode_name');
-        $movie->season_number=$request->get('season_number');
-        $movie->updated_at=Carbon::now()->timestamp;
-        $movie->update();
+       
+
         $subtitles=Subtitle::where('movie_id',$id)->get();
         foreach($subtitles as $subtitle)
         {
@@ -446,12 +478,37 @@ class MovieController extends Controller
 
      public function singlemoviestore(MovieFormRequest $request)
     { 
-       if($request->hasFile('video_file'))
+      if($request->hasFile('video_file'))
         { 
            $video_file=$request->file('video_file');
            $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           $video_file->move(public_path().'/images/movies/',$video_filename);       
+           //$video_file->move(public_path().'/images/movies/',$video_filename); 
+           $video_file->storeAs('/', $video_filename, 'uploads');
+
+           $movie=Movie::create([
+            'episode_name' =>  $request->get('episode_name'), 
+            'moviename_id' => $request->get('moviename_id'),
+            'season_number' => $request->get('season_number'),
+            'video_file' => $video_filename,
+            'disk' => 'uploads',
+           ]); 
+           ConvertMovieforStreaming::dispatch($movie);     
         }
+        else
+        {
+           $movie=Movie::create([
+            'episode_name' =>  $request->get('episode_name'), 
+            'moviename_id' => $request->get('moviename_id'),
+            'season_number' => $request->get('season_number'),
+            'processed' => '2',                  
+          ]);
+        }
+       // if($request->hasFile('video_file'))
+       //  { 
+       //     $video_file=$request->file('video_file');
+       //     $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+       //     $video_file->move(public_path().'/images/movies/',$video_filename);       
+       //  }
         if($request->get('status'))
         {
           $moviename=MovieName::whereId($request->get('moviename_id'))->first();
@@ -459,12 +516,12 @@ class MovieController extends Controller
           $moviename->updated_at=Carbon::now()->timestamp;
           $moviename->update();
         }
-       $movies_table=Movie::create([
-            'episode_name' =>  $request->get('episode_name'), 
-            'moviename_id' => $request->get('moviename_id'),
+       // $movies_table=Movie::create([
+       //      'episode_name' =>  $request->get('episode_name'), 
+       //      'moviename_id' => $request->get('moviename_id'),
             
-            'video_file' => $video_filename,                  
-        ]);
+       //      'video_file' => $video_filename,                  
+       //  ]);
       // $validatedData = $request->validate([
       //           'subtitles.subtitle_file' => 'required|mimes:jpeg'
       //            ]); 
@@ -481,7 +538,7 @@ class MovieController extends Controller
                  $subtitle_filename=uniqid().'-'.$subtitle_file[$item]->getClientOriginalName();
                  $subtitle_file[$item]->move(public_path().'/images/subtitles/',$subtitle_filename);   
                  $data2=array(
-                 'movie_id'=> $movies_table->id,
+                 'movie_id'=> $movie->id,
                  'subtitle_name'=> $request->subtitle_name[$item],
                  'subtitle_file'=>$subtitle_filename
                  ); 
@@ -492,9 +549,9 @@ class MovieController extends Controller
           }           
         }
          Comment::create([
-            'content' => Auth::user()->name ." created Movie ".$movies_table->episode_name,
+            'content' => Auth::user()->name ." created Movie ".$movie->episode_name,
             'user_id' => Auth::user()->id,
-            'commendable_id' =>$movies_table->id ,
+            'commendable_id' =>$movie->id ,
             'commendable_type' => "movies"        
         ]);
         return redirect()->back()->with(['status'=> 'Successfully Saved Movie Upload']);      
@@ -505,12 +562,26 @@ class MovieController extends Controller
        $movie=Movie::whereId($id)->firstOrFail();
 
         if($request->hasFile('video_file'))
-        { 
+        {  
            $video_file=$request->file('video_file');
            $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           $video_file->move(public_path().'/images/movies/',$video_filename);       
+           $video_file->storeAs('/', $video_filename, 'uploads');
+ 
+           $movie->episode_name=$request->get('episode_name');
+           $movie->season_number=$request->get('season_number');
+           $movie->video_file=$video_filename;
+          
+           $movie->updated_at=Carbon::now()->timestamp;
+           $movie->update();
+           ConvertMovieforStreaming::dispatch($movie);            
         }
-        else{ $video_filename = $movie->video_file;}
+        else
+        { 
+           $movie->episode_name=$request->get('episode_name');
+           $movie->season_number=$request->get('season_number');
+           $movie->updated_at=Carbon::now()->timestamp;
+           $movie->update();
+        }
 
         if($request->get('status'))
         {

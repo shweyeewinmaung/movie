@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Str;
 return [
 
     /*
@@ -121,13 +121,16 @@ return [
     | new session cookie is created by the framework for every driver.
     |
     */
-
-    'cookie' => env(
+'cookie' => env(
         'SESSION_COOKIE',
-        'AA'
-
-       // env('APP_NAME', 'laravel'), '_')
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),
+    // 'cookie' => env(
+    //     'SESSION_COOKIE',
+    //     'AA'
+
+    //    // env('APP_NAME', 'laravel'), '_')
+    // ),
 
     /*
     |--------------------------------------------------------------------------

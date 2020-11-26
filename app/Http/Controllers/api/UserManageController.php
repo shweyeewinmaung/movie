@@ -82,7 +82,7 @@ class UserManageController extends Controller
         return response()->json(['status'=>'fail'],200);
     }
     public function userrouteregister(Request $request) 
-    { 
+    { // dd($request);
         $check = User::where('email',$request->email)->first();
         if(!empty($check))
         {
@@ -100,7 +100,7 @@ class UserManageController extends Controller
         $last_usercode = User::orderBy('id','DESC')->first();
         $user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "0123", STR_PAD_LEFT);
         $user->save();
-
+       // dd($user);
         $typeuser = new Typeuser;
         $typeuser->user_id = $user->id;
         $typeuser->typeofuser = "free";

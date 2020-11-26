@@ -388,9 +388,15 @@
                           @if($movienamelist->status == "Ongoing")
                          <option  selected value="Ongoing">{{$movienamelist->status}}</option>
                           <option  value="Finished">Finished</option>
-                         @else
+                          @elseif($movienamelist->status == "Finished")
                          <option selected value="Finished">{{$movienamelist->status}}</option> 
-                         <option   value="Ongoing">Ongoing</option>@endif                     
+                         <option   value="Ongoing">Ongoing</option>                     
+                         </select>
+                         @else
+                          <option  selected ></option>
+                           <option value="Ongoing">Ongoing</option>
+                          <option  value="Finished">Finished</option> 
+                          @endif                     
                          </select>
                        </div>
                      </div>  

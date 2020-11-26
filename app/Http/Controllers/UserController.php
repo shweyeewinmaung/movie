@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use FFMpeg;
+//use Pbmedia\LaravelFFMpeg\FFMpegFacade as FFMpeg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -9,7 +10,8 @@ use DB;
 use App\User;
 use App\Typeuser;
 use App\Comment;
-use Illuminate\Support\Facades\Hash;
+use Streaming\Representation;
+//use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,7 +24,104 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function videoexample()
+    {
+        return view('admin.videoexample');
+    }
+     public function videoexamplesave(Request $request)
+    {  
+         // $format = new FFMpeg\Format\Video\X264('libmp3lame', 'libx264');
+         // $lowBitrate = ($format)->setKiloBitrate(250);
+         // $midBitrate = ($format)->setKiloBitrate(500);
+         // $highBitrate = ($format)->setKiloBitrate(1000);
+         //$superBitrate = ($format)->setKiloBitrate(1500);
+
+        $lowBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(500)->setVideoCodec('libx264');
+        $midBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(1000)->setVideoCodec('libx264');
+        $highBitrate = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(3000)->setVideoCodec('libx264');
+        
+       $aa=FFMpeg::fromDisk('uploads')->open('aa.mp4')
+    ->getVideoStream()
+    ->getDimensions();
+   // ->first()
+   // ->getDimensions();
+    //dd($aa->getWidth());
+    if($aa->getWidth() >= '1080' )
+    {
+        echo $cc='aa';
+    }
+    else
+    {
+        echo $cc='bb';
+    }
+    dd($cc);
+        FFMpeg::fromDisk('uploads')
+        ->open('aa.mp4')
+        ->exportForHLS()
+        //->dontSortFormats()
+        ->setSegmentLength(10)
+        //->toDisk('local')
+        // ->addFormat($lowBitrate, function($media) {
+        //     $media->addFilter(function ($filters) {
+        //         $filters->custom(new \FFMpeg\Coordinate\Dimension(640, 480));
+        //     });
+        // })
+        // ->addFormat($midBitrate, function($media) {
+        //     $media->addFilter(function ($filters) {
+        //         $filters->custom(new \FFMpeg\Coordinate\Dimension(1280, 960));
+        //     });
+        // })
+        ->addFormat($lowBitrate, function($media) {
+           $media->addLegacyFilter(function ($filters) {
+               $filters->resize(new \FFMpeg\Coordinate\Dimension(426,240));
+            });
+        })
+        ->addFormat($midBitrate, function($media) {
+           $media->addLegacyFilter(function ($filters) {
+               $filters->resize(new \FFMpeg\Coordinate\Dimension(640,360));
+            });
+        })
+        ->addFormat($highBitrate, function($media) {
+           $media->addLegacyFilter(function ($filters) {
+               $filters->resize(new \FFMpeg\Coordinate\Dimension(2560, 1920));
+            });
+        })
+
+    // ->exportForHLS()
+    // ->setSegmentLength(10) // optional
+    // ->setKeyFrameInterval(48) // optional
+    // // ->addFormat($lowBitrate)
+    // // ->addFormat($midBitrate)
+    // // ->addFormat($highBitrate)
+    //  ->addFormat($lowBitrate, function($media) {
+    //     $media->addFilter('scale=640:480');
+    // })
+    // ->addFormat($midBitrate, function($media) {
+    //     $media->scale(960, 720);
+    // })
+    // ->addFormat($highBitrate, function ($media) {
+    //     $media->addFilter(function ($filters, $in, $out) {
+    //         $filters->custom($in, 'scale=1920:1200', $out); // $in, $parameters, $out
+    //     });
+    // })
+    // ->addFormat($superBitrate, function($media) {
+    //     $media->addLegacyFilter(function ($filters) {
+    //         $filters->resize(new \FFMpeg\Coordinate\Dimension(2560, 1920));
+    //     });
+    // })
+    ->save('adaptive_steve.m3u8');
+        return view('admin.videoexample');
+
+    //     $aa= FFMpeg::open('aa.mp4')
+    // ->exportForHLS()
+    // ->useSegmentFilenameGenerator(function ($name, $format, $key, callable $segments, callable $playlist) {
+    //     $segments("{$name}-{$format}-{$key}-%03d.ts");
+    //     $playlist("{$name}-{$format}-{$key}.m3u8");
+    // });
+    // dd($aa);
+       
+    }
+     public function index()
     {
         $usersall=User::all();
         $userslists = User::orderBy('id', 'desc')->paginate(50); 

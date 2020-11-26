@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "aminyazdanpanah/php-ffmpeg-video-streaming": "^1.2",
         "fideloper/proxy": "^4.4",
+        "james-heinrich/getid3": "^1.9",
         "laravel/framework": "^6.20",
-        "laravel/passport": "7.5.1",
+        "laravel/passport": "9.*",
         "laravel/tinker": "^2.5",
         "pbmedia/laravel-ffmpeg": "^7.4"
     },

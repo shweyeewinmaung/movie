@@ -77,7 +77,7 @@ Route::prefix('admin')->group(function(){
   Route::get('/MovieNameList','MovieNameController@index')->name('moviename.list');
   Route::get('/MovieNameList/search/post', 'MovieNameController@searchmoviename')->name('moviename.search');
   Route::get('/MovieNameList/subcategory/get/{id}', 'MovieNameController@getsubcategory');
-  Route::post('/MovieNameList/image_upload', 'MovieNameController@imageupload')->name('upload');
+  Route::post('/MovieNameList/image_upload', 'MovieNameController@imageupload')->name('uploads');
   Route::post('/MovieNameStore','MovieNameController@store')->name('moviename.store');
   Route::post('/MovieNameList/{id}/edit','MovieNameController@update')->name('moviename.update');
   Route::post('/MovieNameList/{id}/delete', 'MovieNameController@destroy')->name('moviename.delete');
@@ -121,7 +121,21 @@ Route::prefix('admin')->group(function(){
  Route::post('/UserList/{id}/changepassword', 'UserController@changepassword')->name('changepassword');
  Route::post('/UserList/{id}/delete', 'UserController@destroyuser')->name('userfor.delete');
   /***********************User End*************************************/
+  /*************************************************************/
+  // Route::get('/VideoExample','UserController@videoexample')->name('videoexample');
+  // Route::post('/VideoExample','UserController@videoexamplesave')->name('videoexample.save');
 
+
+//    Route::get('/video', 'VideoController@index');
+ 
+//     Route::get('/uploader', 'VideoController@uploader')->name('uploader');
+ 
+     Route::post('/upload', 'VideoController@store')->name('upload');
+
+//     Route::get('/queue-start', function (){
+//   \Artisan::call('queue:work');
+// });
+  /*************************************************************/
   /***********************History Start*************************************/
   // Route::get('/history','HistoryController@index')->name('history.list');
   // Route::get('/historylist/search/post', 'HistoryController@searchpost')->name('history.search');

@@ -1,6 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('stylesheet')
+<link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/videojs-hls-source-selector@1.0.1/dist/videojs-http-source-selector.min.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-hls-source-selector@1.0.1/dist/videojs-http-source-selector.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
 <style type="text/css">
 .search-bar input{
 	width: 200px!important;
@@ -265,7 +270,10 @@ video {
                    	 <th>No</th>
                      <th>Season</th>
                      <th>Name</th>
-                     <th>Subtitles</th>                  
+                     <th>Subtitles</th> 
+                     <th>Streaming Date</th>
+                     <th>Process</th>
+
                      <th>Play</th>
                      <th>Edit</th>
                      <th>Delete</th>
@@ -285,18 +293,59 @@ video {
                     </ul>
                      </td>
                      <td>
-                     <button type="submit" class="btn btn-light"  data-toggle="modal" data-target="#play"><i class="fa fa-play" aria-hidden="true"></i></button>
+                     @if($movieslist->converted_for_streaming_at)
+                      {{ date('Y-m-d', strtotime($movieslist->converted_for_streaming_at)) }}<br>{{$movieslist->converted_for_streaming_at->format('H:i:s')}}
+                      @else
+                      No
+                      @endif
+                      </td>
+                      <td>
+                        @if($movieslist->processed == '0')
+                        Available Shortly
+                        @elseif($movieslist->processed == '1')
+                        Done Uploaded
+                        @else
+                        No
+                        @endif
+                      </td>
+                     <td>
+                     <button type="submit" class="btn btn-light"  data-toggle="modal" data-target="#play{{$movieslist->id}}"><i class="fa fa-play" aria-hidden="true"></i></button>
                      <!-- Modal -->
-                     <div class="modal fade" id="play" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                     <div class="modal fade" id="play{{$movieslist->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                           <div class="modal-body">
                              <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="float:right;"><spanstyle="color:red">x</span></button>
                              <!----------------->
                               <div class="card-body">
-                               <video  height="300"  controls>
-                                    <source src="{{asset('images/movies/'.$movieslist->video_file)}}" type="video/mp4">
-                                </video>
+                                @if($movieslist->processed == '0')
+                                  <div class="alert alert-info w-100">
+                                     Video is currently being processed and will be available shortly
+                                  </div>
+                                  @elseif($movieslist->processed == '1')
+                                 <video id='hls-example{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
+                                    <source src="{{asset('img/uploads/'.$movieslist->stream_path)}}">
+                                  </video>    
+                            <script>
+                                  var options =
+                                  {
+                                    controls : true,
+                                    plugins: {
+                                      httpSourceSelector:
+                                      {
+                                        default: 'auto'
+                                      }
+                                    }
+                                  };
+                                  var player = videojs('hls-example'+{{$movieslist->id}}, options);
+                                  player.httpSourceSelector();
+                            </script>        
+                               
+                                 @else
+                                  <div class="alert alert-info w-100">
+                                    No Video
+                                  </div>
+                                 @endif
                               </div><!-----card body end-----> 
                             <!----------------->
                             </div><!--modal-body end-->
@@ -388,9 +437,35 @@ video {
                      </div>  
                      <div class="col-md-6 pr-md-1">
                        <div class="form-group">
-                        <video  height="300"  controls>
-                                    <source src="{{asset('images/movies/'.$movieslist->video_file)}}" type="video/mp4">
-                                </video>
+                              @if($movieslist->processed == '0')
+                                  <div class="alert alert-info w-100">
+                                     Video is currently being processed and will be available shortly
+                                  </div>
+                                  @elseif($movieslist->processed == '1')
+                                 <video id='hls-exampleedit{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
+                                    <source src="{{asset('img/uploads/'.$movieslist->stream_path)}}">
+                                  </video>    
+                            <script>
+                                  var options =
+                                  {
+                                    controls : true,
+                                    plugins: {
+                                      httpSourceSelector:
+                                      {
+                                        default: 'auto'
+                                      }
+                                    }
+                                  };
+                                  var player = videojs('hls-exampleedit'+{{$movieslist->id}}, options);
+                                  player.httpSourceSelector();
+                            </script>        
+                               
+                                 @else
+                                  <div class="alert alert-info w-100">
+                                    No Video
+                                  </div>
+                                 @endif
+                                
                        </div>
                      </div>  
                   </div>

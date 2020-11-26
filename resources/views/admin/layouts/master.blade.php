@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Movie App</title>
+  <title>KYI MAL</title>
   <!-- loader-->
   <!-- <link href="{{asset('/css/pace.min.css')}}" rel="stylesheet"/> -->
   <!-- <script src="{{asset('/js/pace.min.js')}}"></script> -->

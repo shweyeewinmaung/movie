@@ -1,7 +1,7 @@
 <footer class="footer">
       <div class="container">
         <div class="text-center">
-         TRUENET MOVIE ADMIN DASHBOARD
+         KYI MAL ADMIN DASHBOARD
         </div>
       </div>
     </footer>
