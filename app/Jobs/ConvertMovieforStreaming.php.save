@@ -34,9 +34,9 @@ class ConvertMovieforStreaming implements ShouldQueue
      */
     public function handle()
     {
-        $lowBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(250)->setVideoCodec('libx264');
-       $midBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(500)->setVideoCodec('libx264');
-       $highBitrate = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(1000)->setVideoCodec('libx264');
+       // $lowBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(250)->setVideoCodec('libx264');
+       // $midBitrate  = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(500)->setVideoCodec('libx264');
+       // $highBitrate = (new \FFMpeg\Format\Video\X264 ('aac'))->setKiloBitrate(1000)->setVideoCodec('libx264');
 
       
         //$converted_name = uniqid().'-'.$this->video->original_name.'.m3u8';
@@ -77,7 +77,7 @@ class ConvertMovieforStreaming implements ShouldQueue
             
             ->addFormat($midBitrate, function($media) {
                $media->addLegacyFilter(function ($filters) {
-                   $filters->resize(new \FFMpeg\Coordinate\Dimension(640,360));
+                   $frs->resize(new \FFMpeg\Coordinate\Dimension(640,360));
                 });
             })
            
@@ -87,18 +87,7 @@ class ConvertMovieforStreaming implements ShouldQueue
         {
             FFMpeg::fromDisk($this->movie->disk)
              ->open($this->movie->video_file)         
-             ->exportForHLS()
-             ->setSegmentLength(10)
-            
-            ->addFormat($lowBitrate, function($media) {
-               $media->addLegacyFilter(function ($filters) {
-                   $filters->resize(new \FFMpeg\Coordinate\Dimension(426,240));
-                });
-            })
-           
-            ->save($converted_name);
-        }
-             
+             ->exportForH  
          $this->movie->update([
             'converted_for_streaming_at' => Carbon::now(),
             'processed' => true,

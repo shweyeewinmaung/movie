@@ -248,7 +248,17 @@ class MovieController extends Controller
             'video_file' => $video_filename,
             'disk' => 'uploads',
            ]); 
-           ConvertMovieforStreaming::dispatch($movie);     
+           ConvertMovieforStreaming::dispatch($movie);
+            /*******************************/
+          //   $movie->update([
+          //  'converted_for_streaming_at' => Carbon::now(),
+          //  'processed' => true,
+          //  'stream_path' => 'aa'
+       // ]);
+
+           /****************************/
+
+     
         }
         else
         {
