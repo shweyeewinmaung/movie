@@ -13,3 +13,4 @@ yarn-error.log
 .env
 /public/img/uploads
 index2.php
+index.php
