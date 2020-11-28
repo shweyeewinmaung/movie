@@ -103,6 +103,7 @@
                      </div>  
                   </div> 
 		          <div class="form-group" align="center">
+                 <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
 		            <button class="btn btn-light" type="submit" ><i class="icon-lock"></i> SAVE</button>
 		          </div>
                 </form>
@@ -203,6 +204,7 @@
                      </div>  
                   </div> 
 		          <div class="form-group" align="center">
+                 <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
 		            <button class="btn btn-light" type="submit" ><i class="icon-lock"></i> UPDATE</button>
 		          </div>
                 </form>

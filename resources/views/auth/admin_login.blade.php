@@ -12,15 +12,15 @@
   <!-- <link href="{{asset('/css/pace.min.css')}}" rel="stylesheet"/>
   <script src="{{asset('/js/pace.min.js')}}"></script> -->
   <!--favicon-->
-  <link rel="icon" href="{{asset('/images/favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{asset('/public/images/favicon.ico')}}" type="image/x-icon">
   <!-- Bootstrap core CSS-->
-  <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet"/>
+  <link href="{{asset('/public/css/bootstrap.min.css')}}" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="{{asset('/css/animate.css')}}" rel="stylesheet" type="text/css"/>
+  <link href="{{asset('/public/css/animate.css')}}" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="{{asset('/css/icons.css')}}" rel="stylesheet" type="text/css"/>
+  <link href="{{asset('/public/css/icons.css')}}" rel="stylesheet" type="text/css"/>
   <!-- Custom Style-->
-  <link href="{{asset('/css/app-style.css')}}" rel="stylesheet"/>
+  <link href="{{asset('/public/css/app-style.css')}}" rel="stylesheet"/>
   
 </head>
 
@@ -38,7 +38,7 @@
         <div class="card-body">
          <div class="card-content p-2">
             <div class="text-center">
-                <img src="{{asset('/images/logo-icon2.png')}}" alt="logo icon">
+                <img src="{{asset('/public/images/logo-icon2.png')}}" alt="logo icon">
             </div>
             <br>
           <!-- <div class="card-title text-uppercase text-center py-3">Sign In</div> -->
@@ -152,15 +152,15 @@
     </div><!--wrapper-->
     
   <!-- Bootstrap core JavaScript-->
-  <script src="{{asset('/js/jquery.min.js')}}"></script>
-  <script src="{{asset('/js/popper.min.js')}}"></script>
-  <script src="{{asset('/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('/public/js/jquery.min.js')}}"></script>
+  <script src="{{asset('/public/js/popper.min.js')}}"></script>
+  <script src="{{asset('/public/js/bootstrap.min.js')}}"></script>
     
   <!-- sidebar-menu js -->
-  <script src="{{asset('/js/sidebar-menu.js')}}"></script>
+  <script src="{{asset('/public/js/sidebar-menu.js')}}"></script>
   
   <!-- Custom scripts -->
-  <script src="{{asset('/js/app-script.js')}}"></script>
+  <script src="{{asset('/public/js/app-script.js')}}"></script>
   
 </body>
 </html>

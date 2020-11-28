@@ -187,6 +187,7 @@
                 
                  
 		          <div class="form-group" align="center">
+                 <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
 		            <button class="btn btn-light" type="submit" ><i class="icon-lock"></i> SAVE</button>
 		          </div>
                 </form>
@@ -244,7 +245,7 @@
                     <tr>
                       <td>{{$movienamelists->firstItem() +$key}}</td>
                       <td>                      
-                           <img class="image" src="{{asset('images/movienames/'.$movienamelist->movie_file)}}" alt="">
+                           <img class="image" src="{{asset('/public/images/movienames/'.$movienamelist->movie_file)}}" alt="">
                       </td>
                       <td>{{$movienamelist->name}}</td>
                       <td>{{$movienamelist->categories->name}}</td>
@@ -293,7 +294,7 @@
                      </div> 
                        <div class="col-md-6 pr-md-1">
                        <div class="form-group">
-                           <img class="image1" src="{{asset('images/movienames/'.$movienamelist->movie_file)}}" alt="">
+                           <img class="image1" src="{{asset('/public/images/movienames/'.$movienamelist->movie_file)}}" alt="">
                          </div>
                      </div>  
                   </div> 
@@ -427,7 +428,7 @@
                      </div> 
                       <div class="col-md-6 pr-md-1">
                        <div class="form-group">
-                        <img class="image1" src="{{asset('images/movienames/'.$movienamelist->movie_file)}}" alt="">
+                        <img class="image1" src="{{asset('/public/images/movienames/'.$movienamelist->movie_file)}}" alt="">
                           @if ($errors->has('movie_file'))
                       <label class="alerttext">{{ $errors->first('movie_file') }}</label>
                     @endif
@@ -448,6 +449,7 @@
                 
                  
               <div class="form-group" align="center">
+                 <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
                 <button class="btn btn-light" type="submit" ><i class="icon-lock"></i> UPDATE</button>
               </div>
                 </form>
@@ -535,7 +537,7 @@
   
  @endsection
  @section('script')
- <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+ <script src="{{ asset('/public/ckeditor/ckeditor.js') }}"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script type="text/javascript">
   CKEDITOR.replace( 'outline', {
@@ -557,7 +559,7 @@ $(document).ready(function() {
     $('select[name="category_id"]').on('change', function(){
         var category_id = $(this).val();
         var APP_URL = {!! json_encode(url('/')) !!};       
-         
+         //alert(APP_URL);
         if(category_id) {
 
             $.ajax({

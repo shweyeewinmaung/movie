@@ -22,7 +22,7 @@ class CreateMoviesTable extends Migration
             $table->string('disk')->nullable();
             $table->string('stream_path');
             $table->integer('processed')->default(0);
-            $table->datetime('convert_for_streaming_at')->nullable();
+            $table->datetime('converted_for_streaming_at')->nullable();
             $table->timestamps();
         });
     }

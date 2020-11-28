@@ -4,7 +4,7 @@
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="{{route('admin.dashboard')}}">
-       <img src="{{asset('/images/logo-icon2.png')}}" class="logo-icon" alt="logo icon">
+       <img src="{{asset('/public/images/logo-icon2.png')}}" class="logo-icon" alt="logo icon">
       <!--  <h5 class="logo-text">TRUENET</h5> -->
      </a>
    </div>
