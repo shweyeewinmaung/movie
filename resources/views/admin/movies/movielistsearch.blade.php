@@ -218,7 +218,7 @@
                      <td>{{$moviesearchlists->firstItem() +$key}}</td>
                      <td>
                        @if($moviesearchlist->movie_file)
-                           <button type="button" class="btn" data-toggle="modal" data-target="#myimage{{$moviesearchlist->id}}"> <img class="image" src="{{asset('images/movienames/'.$moviesearchlist->movie_file)}}" alt=""></button>
+                           <button type="button" class="btn" data-toggle="modal" data-target="#myimage{{$moviesearchlist->id}}"> <img class="image" src="{{asset('/public/images/movienames/'.$moviesearchlist->movie_file)}}" alt=""></button>
                        @else
                            <button type="button" class="btn" data-toggle="modal" data-target="#myimage{{$moviesearchlist->id}}"> <img src="//placehold.it/1000x600" class="img-responsive image"></button>
                           
@@ -228,7 +228,7 @@
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <img src="{{asset('images/movienames/'.$moviesearchlist->movie_file)}}" class="image2">
+                                        <img src="{{asset('/public/images/movienames/'.$moviesearchlist->movie_file)}}" class="image2">
                                     </div>
                                 </div>
                               </div>

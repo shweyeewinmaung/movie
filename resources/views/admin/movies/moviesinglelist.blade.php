@@ -201,6 +201,7 @@ video {
                   
                   
 		          <div class="form-group" align="center">
+                 <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
 		            <button class="btn btn-light" type="submit" ><i class="icon-lock"></i> SAVE</button>
 		          </div>
                 </form>
@@ -318,7 +319,7 @@ video {
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-example{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
-                                    <source src="{{asset('img/uploads/'.$movieslist->stream_path)}}">
+                                    <source src="{{asset('/public/img/uploads/'.$movieslist->stream_path)}}">
                                   </video>    
                             <script>
                                   var options =
@@ -432,7 +433,7 @@ video {
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-exampleedit{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
-                                    <source src="{{asset('img/uploads/'.$movieslist->stream_path)}}">
+                                    <source src="{{asset('/public/img/uploads/'.$movieslist->stream_path)}}">
                                   </video>    
                             <script>
                                   var options =
@@ -539,6 +540,7 @@ video {
                   
                   
               <div class="form-group" align="center">
+                <button class="btn btn-light" type="button" data-dismiss="modal" ><i class="fa fa-times"></i> Close</button>
                 <button class="btn btn-light" type="submit" ><i class="icon-event"></i> UPDATE</button>
               </div>
                 </form>

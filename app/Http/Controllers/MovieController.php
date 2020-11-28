@@ -552,9 +552,10 @@ class MovieController extends Controller
                  'subtitle_name'=> $request->subtitle_name[$item],
                  'subtitle_file'=>$subtitle_filename
                  ); 
+                 // dd($data2);
                   DB::table('subtitles') -> insert($data2);      
             }
-                       
+                
                           
           }           
         }

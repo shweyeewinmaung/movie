@@ -43,7 +43,7 @@ class ConvertMovieforStreaming implements ShouldQueue
         //$converted_namegetclean = $this->getCleanFileName($this->movie->video_file);
         //$converted_name = uniqid().'-'.$converted_namegetclean.".m3u8";
         $converted_name = $this->getCleanFileName($this->movie->video_file).".m3u8";
-
+       //dd($converted_name);
        // $moviefromdb=FFMpeg::fromDisk($this->movie->disk)
        //  ->open($this->movie->video_file) 
        // ->getVideoStream()
