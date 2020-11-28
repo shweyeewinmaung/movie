@@ -319,7 +319,7 @@ video {
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-example{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
-                                    <source src="{{asset('/public/img/uploads/'.$movieslist->stream_path)}}">
+                                    <source src="{{asset('/img/uploads/'.$movieslist->stream_path)}}">
                                   </video>    
                             <script>
                                   var options =
@@ -433,7 +433,7 @@ video {
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-exampleedit{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
-                                    <source src="{{asset('/public/img/uploads/'.$movieslist->stream_path)}}">
+                                    <source src="{{asset('/img/uploads/'.$movieslist->stream_path)}}">
                                   </video>    
                             <script>
                                   var options =
