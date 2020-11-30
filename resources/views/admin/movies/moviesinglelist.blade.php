@@ -85,6 +85,15 @@ video {
             </div>           
           </div>
         @endif
+           @if(session('errorstatus'))
+         
+              <div class="form-group">
+                <label class="alerttext">{{session('errorstatus')}} <br></label>
+
+                
+              </div>
+           
+        @endif
 
         @foreach($errors->all() as $error)
         
@@ -159,12 +168,21 @@ video {
                         </div>
                      </div>    
                   </div>
-
+ 
                    <div class="row">
                      <div class="col-md-12 pr-md-1">
                        <div class="form-group">
-                         <label><i class="fa fa-server"></i> Video Uploade File (*)</label>
+                         <label><i class="fa fa-server"></i> Video Uploade File (*) .mp4 file only</label>
                          <input type="file" class="form-control" placeholder="Picture"  name="video_file">
+                          
+                       </div>
+                     </div>  
+                  </div>
+                    <div class="row">
+                     <div class="col-md-12 pr-md-1">
+                       <div class="form-group">
+                         <label><i class="fa fa-server"></i> Encoded File </label>
+                         <input type="file" class="form-control" placeholder="Picture"   name="encodednames[]"  multiple="multiple">
                           
                        </div>
                      </div>  
@@ -296,7 +314,7 @@ video {
                       </td>
                       <td>
                         @if($movieslist->processed == '0')
-                        Available Shortly
+                         No Video File
                         @elseif($movieslist->processed == '1')
                         Done Uploaded
                         @else
@@ -315,7 +333,8 @@ video {
                               <div class="card-body">
                                     @if($movieslist->processed == '0')
                                   <div class="alert alert-info w-100">
-                                     Video is currently being processed and will be available shortly
+                                     No Video File
+                                    <!--  Video is currently being processed and will be available shortly -->
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-example{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
@@ -420,7 +439,7 @@ video {
                    <div class="row">
                      <div class="col-md-6 pr-md-1">
                        <div class="form-group">
-                         <label><i class="fa fa-server"></i> Video Uploade File </label>
+                         <label><i class="fa fa-server"></i>Video Uploade File (*) .mp4 file only</label>
                          <input type="file" class="form-control" placeholder="Picture"  name="video_file">
                           
                        </div>
@@ -458,6 +477,15 @@ video {
                        </div>
                      </div>  
                   </div>
+                   <div class="row">
+                     <div class="col-md-12 pr-md-1">
+                       <div class="form-group">
+                         <label><i class="fa fa-server"></i> Encoded File </label>
+                         <input type="file" class="form-control" placeholder="Picture"   name="encodednames[]"  multiple="multiple">
+                          
+                       </div>
+                     </div>  
+                   </div>
                    <div class="row" id="subtitle">
                      <div class="col-md-12 pr-md-1">
                        <div class="form-group">

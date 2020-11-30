@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 use App\Jobs\ConvertMovieforStreaming;
+use App\Jobs\MovieJobConverting;
 
 class MovieController extends Controller
 {
@@ -236,39 +237,46 @@ class MovieController extends Controller
     { 
        if($request->hasFile('video_file'))
         { 
-           $video_file=$request->file('video_file');
-           $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           //$video_file->move(public_path().'/images/movies/',$video_filename); 
+           $video_file=$request->file('video_file');           
+           $video_filename=$video_file->getClientOriginalName();
+          // $video_file->move(public_path().'/images/movies/',$video_file);
            $video_file->storeAs('/', $video_filename, 'uploads');
+           
 
+           if($request->hasfile('encodednames'))
+           {
+              foreach($request->file('encodednames') as $file)
+              { 
+                $name =$file->getClientOriginalName();
+                $file->storeAs('/', $name, 'uploads');                 
+              }
+              $encoded_name= preg_replace('/\\.[^.\\s]{3,4}$/', '', $video_filename) . '.m3u8';
+
+              $movie=Movie::create([
+                'episode_name' =>  $request->get('episode_name'), 
+                'moviename_id' => $request->get('moviename_id'),
+                'season_number' => $request->get('season_number'),
+                'video_file' => $video_filename,
+                'disk' => 'uploads',
+                'converted_for_streaming_at' => Carbon::now(),
+                'processed' => true,
+                'stream_path' => $encoded_name
+               ]);
+            }
+            else
+            {
+               return redirect()->back()->with(['errorstatus'=> ' This Movie Must be Add Encoded File']);
+            }
+         }      
+         else
+         {
            $movie=Movie::create([
             'episode_name' =>  $request->get('episode_name'), 
             'moviename_id' => $request->get('moviename_id'),
             'season_number' => $request->get('season_number'),
-            'video_file' => $video_filename,
-            'disk' => 'uploads',
-           ]); 
-           ConvertMovieforStreaming::dispatch($movie);
-            /*******************************/
-          //   $movie->update([
-          //  'converted_for_streaming_at' => Carbon::now(),
-          //  'processed' => true,
-          //  'stream_path' => 'aa'
-       // ]);
-
-           /****************************/
-
-     
-        }
-        else
-        {
-           $movie=Movie::create([
-            'episode_name' =>  $request->get('episode_name'), 
-            'moviename_id' => $request->get('moviename_id'),
-            'season_number' => $request->get('season_number'),
-            'processed' => '2',                  
+            //'processed' => '2',                  
           ]);
-        }
+         }
         if($request->get('status'))
         {
           $moviename=MovieName::whereId($request->get('moviename_id'))->first();
@@ -347,18 +355,51 @@ class MovieController extends Controller
        $movie=Movie::whereId($id)->firstOrFail();
 
         if($request->hasFile('video_file'))
-        {  
-           $video_file=$request->file('video_file');
-           $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+        { 
+           $video_file=$request->file('video_file');           
+           $video_filename=$video_file->getClientOriginalName();
+          // $video_file->move(public_path().'/images/movies/',$video_file);
            $video_file->storeAs('/', $video_filename, 'uploads');
+           
+
+           if($request->hasfile('encodednames'))
+           {
+             //MovieJobConverting::dispatch($movie,$);
+              foreach($request->file('encodednames') as $file)
+              { 
+                $name =$file->getClientOriginalName();
+                $file->storeAs('/', $name, 'uploads');                 
+              }
+              $encoded_name= preg_replace('/\\.[^.\\s]{3,4}$/', '', $video_filename) . '.m3u8';
+              
+              $movie->episode_name=$request->get('episode_name');
+              $movie->season_number=$request->get('season_number');
+              $movie->video_file=$video_filename;
+              $movie->converted_for_streaming_at=Carbon::now();
+              $movie->processed=true;
+              $movie->stream_path=$encoded_name;
+             
+              $movie->updated_at=Carbon::now()->timestamp;
+              $movie->update();           
+            }
+            else
+            {   
+              return redirect()->back()->with(['errorstatus'=> ' This Movie Must be Added Encoded File']);
+            }
+
+        // if($request->hasFile('video_file'))
+        // {  
+        //    $video_file=$request->file('video_file');
+        //    $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+        //    $video_file->storeAs('/', $video_filename, 'uploads');
  
-           $movie->episode_name=$request->get('episode_name');
-           $movie->season_number=$request->get('season_number');
-           $movie->video_file=$video_filename;
+        //    $movie->episode_name=$request->get('episode_name');
+        //    $movie->season_number=$request->get('season_number');
+        //    $movie->video_file=$video_filename;
           
-           $movie->updated_at=Carbon::now()->timestamp;
-           $movie->update();
-           ConvertMovieforStreaming::dispatch($movie);            
+        //    $movie->updated_at=Carbon::now()->timestamp;
+        //    $movie->update();
+        //    ConvertMovieforStreaming::dispatch($movie);            
         }
         else
         { 
@@ -443,7 +484,8 @@ class MovieController extends Controller
      */
     public function destroy($moviename_id,$id)
     {
-        $movie=Movie::where('moviename_id',$moviename_id)->where('id',$id)->firstOrFail();   
+        $movie=Movie::where('moviename_id',$moviename_id)->where('id',$id)->firstOrFail();
+
         $movie->delete();
         $subtitles=Subtitle::where('movie_id',$id)->get();
         foreach($subtitles as $subtitle)
@@ -458,7 +500,7 @@ class MovieController extends Controller
             'commendable_type' => "movies"        
         ]);
         
-        return redirect()->back()->with(['status'=>$movie->episode_name.' Has Been Deleted']);
+        return redirect()->back()->with(['status'=>'Episode - '.$movie->episode_name.' Has Been Deleted']);
     }
     public function statusupdate(Request $request,$moviename_id)
     {
@@ -490,27 +532,60 @@ class MovieController extends Controller
     { 
       if($request->hasFile('video_file'))
         { 
-           $video_file=$request->file('video_file');
-           $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
-           //$video_file->move(public_path().'/images/movies/',$video_filename); 
+           $video_file=$request->file('video_file');           
+           $video_filename=$video_file->getClientOriginalName();
+          // $video_file->move(public_path().'/images/movies/',$video_file);
            $video_file->storeAs('/', $video_filename, 'uploads');
+           
 
-           $movie=Movie::create([
-            'episode_name' =>  $request->get('episode_name'), 
-            'moviename_id' => $request->get('moviename_id'),
-            'season_number' => $request->get('season_number'),
-            'video_file' => $video_filename,
-            'disk' => 'uploads',
-           ]); 
-           ConvertMovieforStreaming::dispatch($movie);     
-        }
+           if($request->hasfile('encodednames'))
+           {
+              foreach($request->file('encodednames') as $file)
+              { 
+                $name =$file->getClientOriginalName();
+                $file->storeAs('/', $name, 'uploads');                 
+              }
+              $encoded_name= preg_replace('/\\.[^.\\s]{3,4}$/', '', $video_filename) . '.m3u8';
+
+              $movie=Movie::create([
+                'episode_name' =>  $request->get('episode_name'), 
+                'moviename_id' => $request->get('moviename_id'),
+               // 'season_number' => $request->get('season_number'),
+                'video_file' => $video_filename,
+                'disk' => 'uploads',
+                'converted_for_streaming_at' => Carbon::now(),
+                'processed' => true,
+                'stream_path' => $encoded_name
+               ]);
+            }
+            else
+            {
+               return redirect()->back()->with(['errorstatus'=> ' This Movie Must be Add Encoded File']);
+            }
+         }      
+      // if($request->hasFile('video_file'))
+      //   { 
+      //      $video_file=$request->file('video_file');
+      //      $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+      //      //$video_file->move(public_path().'/images/movies/',$video_filename); 
+      //      $video_file->storeAs('/', $video_filename, 'uploads');
+
+      //      $movie=Movie::create([
+      //       'episode_name' =>  $request->get('episode_name'), 
+      //       'moviename_id' => $request->get('moviename_id'),
+      //       'season_number' => $request->get('season_number'),
+      //       'video_file' => $video_filename,
+      //       'disk' => 'uploads',
+      //      ]); 
+      //      ConvertMovieforStreaming::dispatch($movie);     
+      //   }
         else
         {
            $movie=Movie::create([
             'episode_name' =>  $request->get('episode_name'), 
             'moviename_id' => $request->get('moviename_id'),
-            'season_number' => $request->get('season_number'),
-            'processed' => '2',                  
+           // 'season_number' => $request->get('season_number'),
+            //'processed' => '2',                  
           ]);
         }
        // if($request->hasFile('video_file'))
@@ -573,23 +648,71 @@ class MovieController extends Controller
        $movie=Movie::whereId($id)->firstOrFail();
 
         if($request->hasFile('video_file'))
-        {  
-           $video_file=$request->file('video_file');
-           $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+        { 
+           $video_file=$request->file('video_file');           
+           $video_filename=$video_file->getClientOriginalName();
+          // $video_file->move(public_path().'/images/movies/',$video_file);
            $video_file->storeAs('/', $video_filename, 'uploads');
+           
+
+           if($request->hasfile('encodednames'))
+           {
+             //MovieJobConverting::dispatch($movie,$);
+              foreach($request->file('encodednames') as $file)
+              { 
+                $name =$file->getClientOriginalName();
+                $file->storeAs('/', $name, 'uploads');                 
+              }
+              $encoded_name= preg_replace('/\\.[^.\\s]{3,4}$/', '', $video_filename) . '.m3u8';
+              
+              $movie->episode_name=$request->get('episode_name');
+             // $movie->season_number=$request->get('season_number');
+              $movie->video_file=$video_filename;
+              $movie->converted_for_streaming_at=Carbon::now();
+              $movie->processed=true;
+              $movie->stream_path=$encoded_name;
+             
+              $movie->updated_at=Carbon::now()->timestamp;
+              $movie->update();           
+            }
+            else
+            {   
+              return redirect()->back()->with(['errorstatus'=> ' This Movie Must be Added Encoded File']);
+            }
+
+        // if($request->hasFile('video_file'))
+        // {  
+        //    $video_file=$request->file('video_file');
+        //    $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+        //    $video_file->storeAs('/', $video_filename, 'uploads');
  
-           $movie->episode_name=$request->get('episode_name');
-           $movie->season_number=$request->get('season_number');
-           $movie->video_file=$video_filename;
+        //    $movie->episode_name=$request->get('episode_name');
+        //    $movie->season_number=$request->get('season_number');
+        //    $movie->video_file=$video_filename;
           
-           $movie->updated_at=Carbon::now()->timestamp;
-           $movie->update();
-           ConvertMovieforStreaming::dispatch($movie);            
+        //    $movie->updated_at=Carbon::now()->timestamp;
+        //    $movie->update();
+        //    ConvertMovieforStreaming::dispatch($movie);            
         }
+
+        // if($request->hasFile('video_file'))
+        // {  
+        //    $video_file=$request->file('video_file');
+        //    $video_filename=uniqid().'-'.$video_file->getClientOriginalName();
+        //    $video_file->storeAs('/', $video_filename, 'uploads');
+ 
+        //    $movie->episode_name=$request->get('episode_name');
+        //    $movie->season_number=$request->get('season_number');
+        //    $movie->video_file=$video_filename;
+          
+        //    $movie->updated_at=Carbon::now()->timestamp;
+        //    $movie->update();
+        //    ConvertMovieforStreaming::dispatch($movie);            
+        // }
         else
         { 
            $movie->episode_name=$request->get('episode_name');
-           $movie->season_number=$request->get('season_number');
+           //$movie->season_number=$request->get('season_number');
            $movie->updated_at=Carbon::now()->timestamp;
            $movie->update();
         }

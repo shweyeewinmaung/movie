@@ -115,7 +115,8 @@ class MovieNameController extends Controller
     {
         if($request->episode == 'on'){$episode='1';}else{$episode='0';};
         // if($request->season == 'on'){$season='1';}else{$season='0';};
-        
+        $prefix_for_movie=uniqid().'-';
+       // dd($prefix_for_movie);
         if($request->hasFile('movie_file'))
         {  
              
@@ -125,7 +126,8 @@ class MovieNameController extends Controller
         }
        
       $movienames_table=MovieName::create([
-            'name' => $request->get('name'), 
+            'name' => $request->get('name'),
+            'prefix_for_movie' => $prefix_for_movie,  
             'subcategory_id' => $request->get('subcategory_id'),
             'category_id' => $request->get('category_id'),
             'outline' => $request->get('outline'),
@@ -212,9 +214,20 @@ class MovieNameController extends Controller
      */
     public function destroy($id)
     {
-        $moviename=MovieName::whereId($id)->firstOrFail();   
-        $moviename->delete();
+        $moviename=MovieName::whereId($id)->firstOrFail();
+       
+        $filename = public_path().'/images/movienames/'.$moviename->movie_file;
+        if(file_exists($filename)) 
+        { 
+            unlink($filename);
+            $moviename->delete();
+        }
+        else
+        {
+           $moviename->delete();
+        }
 
+        
          Comment::create([
             'content' => Auth::user()->name ." deleted Movie Name ".$moviename->name,
             'user_id' => Auth::user()->id,
