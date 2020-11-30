@@ -9,8 +9,8 @@
   <meta name="author" content=""/>
   <title>KYI MAL</title>
   <!-- loader-->
-  <!-- <link href="{{asset('/css/pace.min.css')}}" rel="stylesheet"/>
-  <script src="{{asset('/js/pace.min.js')}}"></script> -->
+  <!-- <link href="{{asset('/public/css/pace.min.css')}}" rel="stylesheet"/>
+  <script src="{{asset('/public/js/pace.min.js')}}"></script> -->
   <!--favicon-->
   <link rel="icon" href="{{asset('/images/favicon.ico')}}" type="image/x-icon">
   <!-- Bootstrap core CSS-->
@@ -38,7 +38,9 @@
         <div class="card-body">
          <div class="card-content p-2">
             <div class="text-center">
+
                 <img src="{{asset('/images/logo-icon2.png')}}" alt="logo icon">
+
             </div>
             <br>
           <!-- <div class="card-title text-uppercase text-center py-3">Sign In</div> -->
