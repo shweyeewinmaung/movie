@@ -24,8 +24,9 @@ class MovieFormRequest extends FormRequest
     public function rules()
     {
         return [
-            
-           'video_file' => 'required',
+             'video_file' => 'required|mimes:mp4',
+            // 'encodednames' => 'required|mimes:m3u8,ts',
+           //'video_file' => 'required',
            //'subtitles.subtitle_file'=>'required|mimes:jpeg'
             
         ];

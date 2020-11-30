@@ -230,6 +230,7 @@
                    	 <th>No.</th>
                      <th>Picture</th>
                      <th>Name</th>
+                     <th>Prefix Name</th>
                      <th>Category</th>
                      <th>SubCategory</th>
                      <th>Episode</th>
@@ -248,6 +249,7 @@
                            <img class="image" src="{{asset('/images/movienames/'.$movienamelist->movie_file)}}" alt="">
                       </td>
                       <td>{{$movienamelist->name}}</td>
+                      <td>{{$movienamelist->prefix_for_movie}}</td>
                       <td>{{$movienamelist->categories->name}}</td>
                       <td>{{$movienamelist->subcategories->name}}</td>
                       <td style="text-align: center;">
@@ -279,6 +281,7 @@
                      <div class="col-md-6 pr-md-1">
                        <div class="form-group">
                          <label><i class="fa fa-server"></i> Name - {{$movienamelist->name}}</label><br>
+                          <label class="form-group"><i class="fa fa-server"></i> Prefix for Movie - {{$movienamelist->prefix_for_movie}}</label><br>
                          <label class="form-group"><i class="fa fa-server"></i> Category - {{$movienamelist->categories->name}}</label><br>
                           <label class="form-group"><i class="fa fa-server"></i> Sub Category - {{$movienamelist->subcategories->name}}</label><br>
                            <label class="form-group"><i class="fa fa-server"></i> Edpisode - @if($movienamelist->episode == '1')

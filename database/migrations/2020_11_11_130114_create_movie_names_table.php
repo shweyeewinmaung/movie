@@ -18,6 +18,7 @@ class CreateMovieNamesTable extends Migration
             $table->integer('subcategory_id');
             $table->integer('category_id');
             $table->string('name');
+            $table->string('prefix_for_movie');
             $table->text('movie_file');
             $table->text('outline');
             $table->boolean('episode')->default(0);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MovieName extends Model
 {
 	protected $fillable = [
-        'subcategory_id','category_id','name','movie_file','outline','episode','status'
+        'subcategory_id','category_id','name','prefix_for_movie','movie_file','outline','episode','status'
     ];
     
     public function subcategories()
