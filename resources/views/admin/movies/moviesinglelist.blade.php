@@ -7,6 +7,35 @@
 <script src="https://cdn.jsdelivr.net/npm/videojs-hls-source-selector@1.0.1/dist/videojs-http-source-selector.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
 <style type="text/css">
+#loadingDiv{
+  position:absolute;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;  
+  background-image:url("{{ asset('/loading.gif') }}");
+  /*background-image: url("{{ asset('assets/img/background.png') }}") */
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  display: none;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+#loadingDiv1{
+  position:absolute;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;  
+  background-image:url("{{ asset('/loading.gif') }}");
+  /*background-image: url("{{ asset('assets/img/background.png') }}") */
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  display: none;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
 .search-bar input{
 	width: 200px!important;
 }
@@ -119,7 +148,7 @@ video {
             <div class="modal-body">
              <!----------------->
               <div class="card-body">
-                <form method="POST" action="{{route('moviesingle.store')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('moviesingle.store')}}" enctype="multipart/form-data" id="formnameupload">
                   <input type="hidden" name="_token" value="{{csrf_token()}}">       
       
                   <div class="row">
@@ -152,11 +181,16 @@ video {
                          <label><i class="fa fa-server"></i> Status</label>
                           <select class="form-control" name="status">
                           @if($moviedata->status == "Ongoing")
-                         <option  selected value="Ongoing">{{$moviedata->status}}</option>
-                          <option  value="Finished">Finished</option>
-                         @else
-                         <option selected value="Finished">{{$moviedata->status}}</option> 
-                         <option   value="Ongoing">Ongoing</option>@endif                     
+                               <option  selected value="Ongoing">{{$moviedata->status}}</option>
+                               <option  value="Finished">Finished</option>
+                             @elseif($moviedata->status == "Finished")
+                               <option selected value="Finished">{{$moviedata->status}}</option> 
+                               <option   value="Ongoing">Ongoing</option>
+                             @else
+                             <option></option>
+                             <option  value="Ongoing">Ongoing</option>
+                             <option  value="Finished">Finished</option>               
+                             @endif                          
                          </select>                       
                        </div>
                      </div>
@@ -226,7 +260,7 @@ video {
         </div><!-----card body end-----> 
         <!----------------->
         </div><!--modal-body end-->
- 
+    <div id="loadingDiv"></div> 
         </div><!--- modal-content end -->
       </div><!-----modal-dialog end-------->
      </div><!----modal fade end --->
@@ -241,10 +275,14 @@ video {
                @if($moviedata->status == "Ongoing")
                  <option  selected value="Ongoing">{{$moviedata->status}}</option>
                  <option  value="Finished">Finished</option>
-               @else
+               @elseif($moviedata->status == "Finished")
                  <option selected value="Finished">{{$moviedata->status}}</option> 
                  <option   value="Ongoing">Ongoing</option>
-               @endif                     
+               @else
+               <option></option>
+               <option  value="Ongoing">Ongoing</option>
+               <option  value="Finished">Finished</option>               
+               @endif                  
         </select>   
             </td >
             <td style="border-top: none"><button type="submit" class="btn btn-light"  ><i class="icon-plus"></i> UPDATE</button></td>
@@ -386,7 +424,7 @@ video {
             <div class="modal-body">
              <!----------------->
               <div class="card-body">
-                <form method="POST" action="{{route('moviesingle.update',['moviename_id'=>$moviedata->id,'id'=>$movieslist->id])}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route('moviesingle.update',['moviename_id'=>$moviedata->id,'id'=>$movieslist->id])}}" enctype="multipart/form-data" id="formnameuploadupdate">
                   <input type="hidden" name="_token" value="{{csrf_token()}}">       
       
                   <div class="row">
@@ -418,12 +456,17 @@ video {
                        <div class="form-group">
                          <label><i class="fa fa-server"></i> Status</label>
                           <select class="form-control" name="status">
-                          @if($moviedata->status == "Ongoing")
-                         <option  selected value="Ongoing">{{$moviedata->status}}</option>
-                          <option  value="Finished">Finished</option>
+                         @if($moviedata->status == "Ongoing")
+                           <option  selected value="Ongoing">{{$moviedata->status}}</option>
+                           <option  value="Finished">Finished</option>
+                         @elseif($moviedata->status == "Finished")
+                           <option selected value="Finished">{{$moviedata->status}}</option> 
+                           <option   value="Ongoing">Ongoing</option>
                          @else
-                         <option selected value="Finished">{{$moviedata->status}}</option> 
-                         <option   value="Ongoing">Ongoing</option>@endif                     
+                         <option></option>
+                         <option  value="Ongoing">Ongoing</option>
+                         <option  value="Finished">Finished</option>                          
+                         @endif                             
                          </select>                       
                        </div>
                      </div>
@@ -448,7 +491,8 @@ video {
                        <div class="form-group">
                             @if($movieslist->processed == '0')
                                   <div class="alert alert-info w-100">
-                                     Video is currently being processed and will be available shortly
+                                     No Video File
+                                    <!--  Video is currently being processed and will be available shortly -->
                                   </div>
                                   @elseif($movieslist->processed == '1')
                                  <video id='hls-exampleedit{{$movieslist->id}}' oncontextmenu="return false;"  class="video-js vjs-default-skin" controls style="width: 100%; height: 400px;">
@@ -575,6 +619,7 @@ video {
         </div><!-----card body end-----> 
         <!----------------->
         </div><!--- modal-content end -->
+        <div id="loadingDiv1"></div> 
       </div><!-----modal-dialog end-------->
      </div><!----modal fade end --->
      <!---------modal end --->
@@ -655,6 +700,15 @@ video {
  @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script type="text/javascript">
+   $('#formnameupload').submit(function() {
+    $('#loadingDiv').show();
+   
+});
+   $('#formnameuploadupdate').submit(function() {
+    $('#loadingDiv1').show();
+   
+});
+
  $(document).ready(function(){ 
     
     $("#alert").fadeOut(3000);
