@@ -136,6 +136,9 @@ Route::prefix('admin')->group(function(){
 //   \Artisan::call('queue:work');
 // });
   /*************************************************************/
+  /***********************Advertising Start*************************************/
+  // Route::get('/AdvertisingList','UserController@index')->name('user.list');
+  /***********************Advertising End*************************************/
   /***********************History Start*************************************/
   // Route::get('/history','HistoryController@index')->name('history.list');
   // Route::get('/historylist/search/post', 'HistoryController@searchpost')->name('history.search');

@@ -11,7 +11,7 @@
   <!-- <link href="{{asset('/css/pace.min.css')}}" rel="stylesheet"/> -->
   <!-- <script src="{{asset('/js/pace.min.js')}}"></script> -->
   <!--favicon-->
-  <link rel="icon" href="{{asset('/public/images/favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{asset('/images/favicon.ico')}}" type="image/x-icon">
   <!-- Vector CSS -->
   <link href="{{asset('/plugins/vectormap/jquery-jvectormap-2.0.2.css')}}" rel="stylesheet"/>
   <!-- simplebar CSS-->

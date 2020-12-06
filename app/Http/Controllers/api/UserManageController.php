@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Traits\TokenDelete;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-
+use Validator;
 
 
 class UserManageController extends Controller
@@ -82,16 +82,24 @@ class UserManageController extends Controller
         return response()->json(['status'=>'fail'],200);
     }
     public function userrouteregister(Request $request) 
-    { // dd($request);
+    { 
         $check = User::where('email',$request->email)->first();
         if(!empty($check))
         {
-          return response()->json(['status' => 'fail']);
+          return response()->json(['status' => 'Fail with duplicate Email']);
         }
-        $validated_data = $request->validate([
-          'name' =>'required',
-          'email' => 'required|unique:users,email'
+        
+        $validated_data = Validator::make($request->all(), [ 
+            'name' => 'required', 
+            'email' => 'required|unique:users,email',
+            'password' => 'required',            
         ]);
+
+        if ($validated_data->fails()) 
+        { 
+            return response()->json(['error'=>$validated_data->errors()], 401);            
+        }
+
 
         $user = new User();
         $user->name = $request->name;
@@ -158,7 +166,7 @@ class UserManageController extends Controller
         else
         {
            $typeuser=Typeuser::where('user_id',$check->id)->first();
-           if($typeuser->status == 0)
+           if($typeuser->status == 'free')
            {
                $users = Auth::loginUsingId($check->id);
 

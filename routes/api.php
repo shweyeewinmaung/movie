@@ -23,7 +23,15 @@ Route::get('/sociallogin','api\UserManageController@loginwithsocial');
 
 Route::get('/userroute','api\UserManageController@userroute');
 Route::get('/userrouteregister','api\UserManageController@userrouteregister');
-Route::get('/userroutelogin','api\UserManageController@userroutelogin');
+Route::post('/userroutelogin','api\UserManageController@userroutelogin');
+
+
+Route::group(['middleware' => 'auth:api'], function(){
+Route::get('/allcategories','api\APICategoryController@allcategories');
+Route::get('/subcategoriesbycat/{id}','api\APICategoryController@subcategories');
+});
+
+
 
 // Route::get('login/facebook', 'api\UserManageController@redirectToProviderfacebook');
 // Route::get('login/facebook/callback', 'api\UserManageController@handleProviderCallbackfacebook');
