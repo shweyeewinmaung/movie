@@ -21,9 +21,7 @@ class UserManageController extends Controller
 {
    
     use TokenDelete;
-    public $successStatus = 200;
-    public $message = 'Success';
-    public $con = true;
+   
     //use AuthenticatesUsers;
     /**
      * Display a listing of the resource.
@@ -91,7 +89,7 @@ class UserManageController extends Controller
           
           return response()->json($user,200); 
         }
-       return response()->json(['status'=>'fail'],200);
+       return response()->json(['status'=>'fail with username and password'],200);
      
     }
     public function userrouteregister(Request $request) 

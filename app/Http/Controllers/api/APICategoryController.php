@@ -20,7 +20,7 @@ class APICategoryController extends Controller
     {
     	$categories=Category::orderBy('name','ASC')->get(); 
     	
-    	 return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $categories], $this->successStatus); 
+    	 return response()->json($categories, $this->successStatus); 
     }
 
     public function subcategories($id) 
@@ -28,7 +28,7 @@ class APICategoryController extends Controller
     	$sub = SubCategory::with(['categories'])->where('category_id',$id)->orderBy('name','ASC')->get();
     	 
     	$subcategoriescollection= SubCategoryResource::collection($sub);
-    	return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $subcategoriescollection], $this->successStatus);
+    	return response()->json($subcategoriescollection, $this->successStatus);
     	// $categories = Category::where('id', $id)->get();
 
      //      if (count($categories) > 0)
