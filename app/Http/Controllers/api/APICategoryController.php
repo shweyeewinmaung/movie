@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 use App\Category;
 use Carbon\Carbon;
 use App\SubCategory;
+use App\MovieName;
+use App\Movie;
+use App\Subtitle;
 use DB;
 use App\Http\Resources\SubCategoryResource;
+use App\Http\Resources\MovieNameResource;
+use App\Http\Resources\MovieResource;
+use App\Http\Resources\SubtitleResource;
 
 class APICategoryController extends Controller
 {
@@ -58,5 +64,23 @@ class APICategoryController extends Controller
      //     //return response()->json($roster,200); 
      //       return response()->json(['message' =>$this->message,'results'=> $roster], $this->successStatus); 
   
+    }
+    public function movienamebysub($id) 
+    {
+       $movienames = MovieName::with(['subcategories'])->where('subcategory_id',$id)->orderBy('name','ASC')->get();
+      
+        $movienamescollection= MovieNameResource::collection($movienames); 
+        return response()->json($movienamescollection, $this->successStatus);
+        
+    }
+    public function moviebyid($id) 
+    {
+        $movies = Movie::with(['subtitles','movienames'])->where('moviename_id',$id)->get();
+        
+       // $movienames = MovieName::with(['subcategories'])->where('subcategory_id',$id)->orderBy('name','ASC')->get();
+      
+        $moviescollection= MovieResource::collection($movies); 
+        return response()->json($moviescollection, $this->successStatus);
+        
     }
 }

@@ -29,6 +29,8 @@ Route::post('/userroutelogin','api\UserManageController@userroutelogin');
 Route::group(['middleware' => 'auth:api'], function(){
 Route::get('/allcategories','api\APICategoryController@allcategories');
 Route::get('/subcategoriesbycat/{id}','api\APICategoryController@subcategories');
+Route::get('/movienamebysub/{id}','api\APICategoryController@movienamebysub');
+Route::get('/moviebyid/{id}','api\APICategoryController@moviebyid');
 });
 
 

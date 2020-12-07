@@ -20,4 +20,8 @@ class Movie extends Model
     {
         return $this->hasMany('App\Subtitle','movie_id');
     }
+     public function movienames()
+    {
+        return $this->belongsTo('App\MovieName','moviename_id');
+    }
 }
