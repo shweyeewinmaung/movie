@@ -14,12 +14,13 @@ class APICategoryController extends Controller
 {
 	public $successStatus = 200;
 	public $message = 'Success';
+    public $con = true;
 
     public function allcategories() 
     {
     	$categories=Category::all();
     	
-    	 return response()->json(['message' =>$this->message,'results'=> $categories], $this->successStatus); 
+    	 return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $categories], $this->successStatus); 
     }
 
     public function subcategories($id) 
@@ -27,7 +28,7 @@ class APICategoryController extends Controller
     	$sub = SubCategory::with(['categories'])->where('category_id',$id)->get();
     	 
     	$subcategoriescollection= SubCategoryResource::collection($sub);
-    	return response()->json(['message' =>$this->message,'results'=> $subcategoriescollection], $this->successStatus);
+    	return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $subcategoriescollection], $this->successStatus);
     	// $categories = Category::where('id', $id)->get();
 
      //      if (count($categories) > 0)

@@ -21,6 +21,9 @@ class UserManageController extends Controller
 {
    
     use TokenDelete;
+    public $successStatus = 200;
+    public $message = 'Success';
+    public $con = true;
     //use AuthenticatesUsers;
     /**
      * Display a listing of the resource.
@@ -67,6 +70,15 @@ class UserManageController extends Controller
     }
      public function userroutelogin(Request $request) 
     { 
+        $validated_data = Validator::make($request->all(), [ 
+            'email' => 'required',
+            'password' => 'required',            
+        ]);
+
+        if ($validated_data->fails()) 
+        { 
+            return response()->json(['con'=>false,'message'=>$validated_data->errors()], 401);          
+        }
        if(Auth::guard('web')->attempt(['email'=>$request->email,'password'=>$request->password]))
        {
           $user = Auth::user();
@@ -77,16 +89,17 @@ class UserManageController extends Controller
           $user['status'] = 'success';
           $user['type'] = $typeuser;
           
-          return response()->json($user,200);
+          return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $user], $this->successStatus); 
         }
-        return response()->json(['status'=>'fail'],200);
+       // return response()->json(['status'=>'fail'],200);
+        return response()->json(['con'=>'false','message' =>'Login Fail'], $this->successStatus); 
     }
     public function userrouteregister(Request $request) 
     { 
         $check = User::where('email',$request->email)->first();
         if(!empty($check))
         {
-          return response()->json(['status' => 'Fail with duplicate Email']);
+          return response()->json(['con'=>false,'message' => 'Fail with duplicate Email'],401);        
         }
         
         $validated_data = Validator::make($request->all(), [ 
@@ -97,7 +110,7 @@ class UserManageController extends Controller
 
         if ($validated_data->fails()) 
         { 
-            return response()->json(['error'=>$validated_data->errors()], 401);            
+            return response()->json(['con'=>false,'message'=>$validated_data->errors()], 401);            
         }
 
 
@@ -121,7 +134,8 @@ class UserManageController extends Controller
         $user['token'] =  $user->createToken('Android')->accessToken;
         $user['status'] = 'successful register';
         $user['type'] = $typeuser;
-        return response()->json($user,200);
+        
+        return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $user], $this->successStatus); 
     }
 
     public function userroute(Request $request) 

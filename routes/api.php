@@ -22,7 +22,7 @@ Route::post('alluser','api\UserManageController@index');
 Route::get('/sociallogin','api\UserManageController@loginwithsocial');
 
 Route::get('/userroute','api\UserManageController@userroute');
-Route::get('/userrouteregister','api\UserManageController@userrouteregister');
+Route::post('/userrouteregister','api\UserManageController@userrouteregister');
 Route::post('/userroutelogin','api\UserManageController@userroutelogin');
 
 
