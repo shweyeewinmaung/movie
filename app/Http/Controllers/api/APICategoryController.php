@@ -18,14 +18,14 @@ class APICategoryController extends Controller
 
     public function allcategories() 
     {
-    	$categories=Category::all();
+    	$categories=Category::orderBy('name','ASC')->get(); 
     	
     	 return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $categories], $this->successStatus); 
     }
 
     public function subcategories($id) 
     {
-    	$sub = SubCategory::with(['categories'])->where('category_id',$id)->get();
+    	$sub = SubCategory::with(['categories'])->where('category_id',$id)->orderBy('name','ASC')->get();
     	 
     	$subcategoriescollection= SubCategoryResource::collection($sub);
     	return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $subcategoriescollection], $this->successStatus);

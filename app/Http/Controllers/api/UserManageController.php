@@ -77,7 +77,7 @@ class UserManageController extends Controller
 
         if ($validated_data->fails()) 
         { 
-            return response()->json(['con'=>false,'message'=>$validated_data->errors()], 401);          
+            return response()->json(['status'=>$validated_data->errors()], 401);          
         }
        if(Auth::guard('web')->attempt(['email'=>$request->email,'password'=>$request->password]))
        {
@@ -89,17 +89,17 @@ class UserManageController extends Controller
           $user['status'] = 'success';
           $user['type'] = $typeuser;
           
-          return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $user], $this->successStatus); 
+          return response()->json($user,200); 
         }
-       // return response()->json(['status'=>'fail'],200);
-        return response()->json(['con'=>'false','message' =>'Login Fail'], $this->successStatus); 
+       return response()->json(['status'=>'fail'],200);
+     
     }
     public function userrouteregister(Request $request) 
     { 
         $check = User::where('email',$request->email)->first();
         if(!empty($check))
         {
-          return response()->json(['con'=>false,'message' => 'Fail with duplicate Email'],401);        
+          return response()->json([ 'status' => 'Fail with duplicate Email'],401);        
         }
         
         $validated_data = Validator::make($request->all(), [ 
@@ -110,7 +110,7 @@ class UserManageController extends Controller
 
         if ($validated_data->fails()) 
         { 
-            return response()->json(['con'=>false,'message'=>$validated_data->errors()], 401);            
+            return response()->json(['status'=>$validated_data->errors()], 401);            
         }
 
 
@@ -135,7 +135,7 @@ class UserManageController extends Controller
         $user['status'] = 'successful register';
         $user['type'] = $typeuser;
         
-        return response()->json(['con'=>$this->con,'message' =>$this->message,'results'=> $user], $this->successStatus); 
+        return response()->json($user,200); 
     }
 
     public function userroute(Request $request) 
