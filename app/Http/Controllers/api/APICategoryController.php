@@ -15,6 +15,7 @@ use App\Http\Resources\SubCategoryResource;
 use App\Http\Resources\MovieNameResource;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\SubtitleResource;
+use App\Http\Resources\RecentlyMovieResource;
 
 class APICategoryController extends Controller
 {
@@ -75,12 +76,16 @@ class APICategoryController extends Controller
     }
     public function moviebyid($id) 
     {
-        $movies = Movie::with(['subtitles','movienames'])->where('moviename_id',$id)->get();
-        
-       // $movienames = MovieName::with(['subcategories'])->where('subcategory_id',$id)->orderBy('name','ASC')->get();
-      
-        $moviescollection= MovieResource::collection($movies); 
-        return response()->json($moviescollection, $this->successStatus);
+       $movies = Movie::with(['subtitles','movienames'])->where('moviename_id',$id)->get();
+       $moviescollection= MovieResource::collection($movies)->collection->groupBy('season_number'); 
+       return response()->json($moviescollection, $this->successStatus);        
+    }
+     public function recentlymoviename() 
+    {
+       $movies = Movie::with(['subtitles','movienames'])->latest()->take(6)->get();
+       $moviescollection= RecentlyMovieResource::collection($movies); 
+       
+       return response()->json($moviescollection, $this->successStatus);
         
     }
 }
