@@ -19,7 +19,7 @@ class RecentlyMovieResource extends JsonResource
             return [
                'id' => $this->id,
                'moviename' => $this->movienames->name,
-               'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
+             //  'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
                // 'outline' => $this->movienames->outline,
                // 'have_episode' => $this->movienames->episode,
                // 'status' => $this->movienames->status,
