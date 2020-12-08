@@ -164,15 +164,15 @@
                        </div>
                      </div>  
                   </div> 
-                   <!--  <div class="row">
+                    <div class="row">
                      <div class="col-md-12 pr-md-1">
                        <div class="form-group">
                          
-                         <input type="checkbox" name="season" class="form-group">
-                         <span class="form-group">Tick the checkbox if there is more than one season</span>
+                         <input type="checkbox" name="show_in_slider" class="form-group">
+                         <span class="form-group">Show In Slider</span>
                        </div>
                      </div>  
-                  </div>  -->
+                  </div> 
                   <div class="row">
                      <div class="col-md-12 pr-md-1">
                        <div class="form-group">
@@ -234,6 +234,7 @@
                      <th>Category</th>
                      <th>SubCategory</th>
                      <th>Episode</th>
+                     <th>Show Slider</th>
                      <th>Status</th>
                      
                      <th>View</th>
@@ -254,6 +255,14 @@
                       <td>{{$movienamelist->subcategories->name}}</td>
                       <td style="text-align: center;">
                         @if($movienamelist->episode == '1')
+                        <i class="fa fa-check" aria-hidden="true" style="color:#689ac6"></i>
+                        @else
+                        <i class="fa fa-times" aria-hidden="true" style="color:#e18585"></i>
+                        @endif
+                      </td>
+                      <td style="text-align: center;">
+                        
+                         @if($movienamelist->show_in_slider == '1')
                         <i class="fa fa-check" aria-hidden="true" style="color:#689ac6"></i>
                         @else
                         <i class="fa fa-times" aria-hidden="true" style="color:#e18585"></i>
@@ -285,6 +294,13 @@
                          <label class="form-group"><i class="fa fa-server"></i> Category - {{$movienamelist->categories->name}}</label><br>
                           <label class="form-group"><i class="fa fa-server"></i> Sub Category - {{$movienamelist->subcategories->name}}</label><br>
                            <label class="form-group"><i class="fa fa-server"></i> Edpisode - @if($movienamelist->episode == '1')
+                                                            Yes
+                                                            @else
+                                                            No
+                                                            @endif
+
+                       </label>   <br> 
+                        <label class="form-group"><i class="fa fa-server"></i> Show Slider - @if($movienamelist->show_in_slider == '1')
                                                             Yes
                                                             @else
                                                             No
@@ -415,6 +431,19 @@
                          <input type="checkbox" name="episode" class="form-group">
                          @endif
                          <span class="form-group">Tick the checkbox if there is more than one episode</span>
+                       </div>
+                     </div>  
+                  </div> 
+
+                   <div class="row">
+                     <div class="col-md-12 pr-md-1">
+                       <div class="form-group">
+                         @if($movienamelist->show_in_slider == '1')
+                         <input type="checkbox" name="show_in_slider" class="form-group" checked="">
+                         @else
+                         <input type="checkbox" name="show_in_slider" class="form-group">
+                         @endif
+                         <span class="form-group">Show In Slider</span>
                        </div>
                      </div>  
                   </div> 

@@ -22,6 +22,7 @@ class CreateMovieNamesTable extends Migration
             $table->text('movie_file');
             $table->text('outline');
             $table->boolean('episode')->default(0);
+            $table->boolean('show_in_slider')->default(0);            
             $table->string('status')->nullable();
             $table->timestamps();
         });

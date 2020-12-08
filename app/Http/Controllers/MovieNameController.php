@@ -114,6 +114,8 @@ class MovieNameController extends Controller
     public function store(MovieNameFormRequest $request)
     {
         if($request->episode == 'on'){$episode='1';}else{$episode='0';};
+        if($request->show_in_slider == 'on'){$show_in_slider='1';}else{$show_in_slider='0';};
+        
         // if($request->season == 'on'){$season='1';}else{$season='0';};
         $prefix_for_movie=uniqid().'-';
        // dd($prefix_for_movie);
@@ -133,6 +135,7 @@ class MovieNameController extends Controller
             'outline' => $request->get('outline'),
             'movie_file' => $movie_filename,
             'episode' => $episode,
+            'show_in_slider' => $show_in_slider,
             // 'season' => $season,          
         ]);
        Comment::create([
@@ -177,12 +180,15 @@ class MovieNameController extends Controller
     public function update(Request $request, $id)
     {
         if($request->episode == 'on'){$episode='1';}else{$episode='0';};
+        if($request->show_in_slider == 'on'){$show_in_slider='1';}else{$show_in_slider='0';};
+        
         // if($request->season == 'on'){$season='1';}else{$season='0';};
         $moviename=MovieName::whereId($id)->firstOrFail();
         $moviename->name=$request->get('name');
         $moviename->category_id=$request->get('category_id');
         $moviename->subcategory_id=$request->get('subcategory_id');
         $moviename->episode=$episode;
+        $moviename->show_in_slider=$show_in_slider;
         $moviename->status=$request->get('status');
         $moviename->outline=$request->get('outlineedit');
         $moviename->updated_at=Carbon::now()->timestamp;
