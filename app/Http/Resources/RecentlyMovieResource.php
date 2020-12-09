@@ -14,19 +14,22 @@ class RecentlyMovieResource extends JsonResource
      */
     public function toArray($request)
     {
-        if($this->processed == '1')
-         {
+      //return ['id' =>$this->id, ];
+        // if($this->processed == '1')
+        //  {
             return [
-               'id' => $this->id,
+               //'id' => $this->id,
+               'moviename_id' => $this->moviename_id,
                'moviename' => $this->movienames->name,
-             //  'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
+              // 'moviename' => $this->movienames->name,
+               'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
                // 'outline' => $this->movienames->outline,
                // 'have_episode' => $this->movienames->episode,
                // 'status' => $this->movienames->status,
-               // 'category_id' => $this->movienames->category_id,
-               // 'category_name' => $this->movienames->categories->name,
-               // 'subcategory_id' => $this->movienames->subcategory_id,
-               // 'subcategory_name' => $this->movienames->subcategories->name,
+               'category_id' => $this->movienames->category_id,
+               'category_name' => $this->movienames->categories->name,
+               'subcategory_id' => $this->movienames->subcategory_id,
+               'subcategory_name' => $this->movienames->subcategories->name,
                
                // 'subtitles' => $this->subtitles,SubtitleResource
                // 'subtitles' => SubtitleResource::collection($this->subtitles),
@@ -37,6 +40,6 @@ class RecentlyMovieResource extends JsonResource
                'created_at' => $this->created_at,
                'updated_at' => $this->updated_at,
            ];
-         }
+        //  }
     }
 }

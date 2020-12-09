@@ -82,9 +82,11 @@ class APICategoryController extends Controller
     }
     public function recentlymoviename() 
     {
-        $movies = Movie::with(['subtitles','movienames'])->orderBy('id','desc')->get();
-        $moviescollection= RecentlyMovieResource::collection($movies)->collection->groupBy('moviename_id')->take(6); 
-       return response()->json($moviescollection, $this->successStatus);        
+       
+        $movies = Movie::with(['subtitles','movienames'])->orderBy('id', 'desc')->groupBy('moviename_id')->take(10)->get();
+        $moviescollection= RecentlyMovieResource::collection($movies); 
+        return response()->json($moviescollection, $this->successStatus);    
+       
     }
     public function homeslider() 
     {
