@@ -25,9 +25,8 @@ class APICategoryController extends Controller
 
     public function allcategories() 
     {
-    	$categories=Category::orderBy('name','ASC')->get(); 
-    	
-    	 return response()->json($categories, $this->successStatus); 
+    	$categories=Category::orderBy('name','ASC')->get();     	
+    	return response()->json($categories, $this->successStatus); 
     }
 
     public function subcategories($id) 

@@ -24,9 +24,7 @@ class MovieNameResource extends JsonResource
             'outline' => $this->outline,
             'episode' => $this->episode,
             'status' => $this->status,
-            'movie_file' => asset('/images/movienames/'.$this->movie_file),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'movie_file' => asset('/images/movienames/'.$this->movie_file),           
         ];
     }
 }
