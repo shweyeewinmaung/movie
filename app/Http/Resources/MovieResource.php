@@ -17,7 +17,8 @@ class MovieResource extends JsonResource
      */
     public function toArray($request)
     {  
-        $series_list= Movie::with(['subtitles'])->where('moviename_id',$this->id)->distinct()->get();
+        $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
+        $series_list=$aalist->groupBy('season_number')->toArray();
            
        return [
           'id' => $this->id,

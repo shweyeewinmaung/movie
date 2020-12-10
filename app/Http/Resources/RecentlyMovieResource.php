@@ -15,7 +15,9 @@ class RecentlyMovieResource extends JsonResource
      */
     public function toArray($request)
     {
-     $series_list= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
+     $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
+     // $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
+        $series_list=$aalist->groupBy('season_number')->toArray();
         if($this->processed == '1')
          {
             return [
