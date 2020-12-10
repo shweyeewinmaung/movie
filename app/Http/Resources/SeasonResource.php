@@ -17,10 +17,18 @@ class SeasonResource extends JsonResource
      */
     public function toArray($request)
     {
-        $aalists= Movie::with(['subtitles'])->where('id', $this['id'])->groupBy('season_number')->get();
-        $series_lists=$aalists->groupBy('season_number')->toArray();
+        // $aalists= Movie::with(['subtitles'])->where('id', $this['id'])->groupBy('season_number')->get();
+        // $series_lists=$aalists->groupBy('season_number')->toArray();
         return [
-            'id' =>$aalists
+            'id' =>$this->id,
+            'episode_name'=> $this->episode_name,
+            'moviename_id'=> $this->moviename_id,
+            'season_number'=>$this->season_number,
+            'video_file'=> asset('/img/uploads/'.$this->video_file),
+            'disk'=> $this->disk,
+            'stream_path'=> asset('/img/uploads/'.$this->stream_path),
+            'processed'=> $this->processed,
+            'converted_for_streaming_at'=> $this->converted_for_streaming_at,
         ];
         // return [
         //                $this['id']

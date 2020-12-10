@@ -107,10 +107,10 @@
                	<td style="border-top:none;"><label><i class="fa fa-server"></i> Category</label><br>
                	  <select class="form-control" name="category_id">
                	  	        @if($categorydata == null)               	  	       
-                            <option selected value="" >All</option>
+                            <option selected value="" >Show All</option>
                	  	        @else
                	  	          <option selected value="{{$categorydata->id}}" >{{$categorydata->name}}</option>
-                            <option  value="" >All</option>
+                            <option  value="" >Show All</option>
                               
                	  	        @endif
 		                    
@@ -125,7 +125,7 @@
                	<td style="border-top:none;text-align: left;"><label><i class="fa fa-server"></i> SubCategory</label><br>
                		 <select class="browser-default custom-select dropdown-primary form-control" name="subcategory_id">
                		 	 @if($subcategorydata == null)
-               		 	   <option selected value="" >All</option>
+               		 	   <option selected value="" >Show All</option>
                		 	 @else
                	  	        <option selected value="{{$subcategorydata->id}}" >{{$subcategorydata->name}}</option>
                	  	     @endif
@@ -316,7 +316,7 @@ $(document).ready(function() {
                 success:function(data) {
                      
                     $('select[name="subcategory_id"]').empty();
-                    $('select[name="subcategory_id"]').append('<option value="">All</option>');
+                    $('select[name="subcategory_id"]').append('<option value="">Show All</option>');
                     $.each(data, function(key, value){
                         
                         $('select[name="subcategory_id"]').append('<option value="'+ key +'">' + value + '</option>');

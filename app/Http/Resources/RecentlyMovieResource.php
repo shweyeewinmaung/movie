@@ -32,9 +32,10 @@ class RecentlyMovieResource extends JsonResource
                'have_episode' => $this->movienames->episode,
                'status' => $this->movienames->status,
                'movie_file' => asset('/images/movienames/'.$this->movienames->movie_file),
-               'video_url' => asset('/img/uploads/'),
-               'subtitle_url' => asset('/images/subtitles/'),   
-              'series_list' => $series_list,
+               // 'video_url' => asset('/img/uploads/'),
+               // 'subtitle_url' => asset('/images/subtitles/'),   
+              //'series_list' => $series_list,
+              'series_list' => SeasonResource::collection($aalist),
                
            ];
          }
