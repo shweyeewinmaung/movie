@@ -75,14 +75,15 @@ class APICategoryController extends Controller
     }
     public function moviebyid($id) 
     {
-       $movies = Movie::with(['subtitles','movienames'])->where('moviename_id',$id)->get();
-       $moviescollection= MovieResource::collection($movies)->collection->groupBy('season_number'); 
-       return response()->json($moviescollection, $this->successStatus);        
+       $movienames = MovieName::with(['subcategories'])->where('id',$id)->get();
+       $movienamescollection= MovieResource::collection($movienames); 
+       return response()->json($movienamescollection, $this->successStatus);
+     
     }
     public function recentlymoviename() 
-    {
-       
+    {       
         $movies = Movie::with(['subtitles','movienames'])->orderBy('id', 'desc')->groupBy('moviename_id')->take(10)->get();
+       // dd($movies->moviename_id);
         $moviescollection= RecentlyMovieResource::collection($movies); 
         return response()->json($moviescollection, $this->successStatus);    
        
@@ -90,7 +91,7 @@ class APICategoryController extends Controller
     public function homeslider() 
     {
         $movienames=MovieName::with(['subcategories'])->where('show_in_slider','1')->orderBy('id','desc')->get();
-        $movienamescollection= MovieNameResource::collection($movienames)->take(10);
+        $movienamescollection= MovieResource::collection($movienames)->take(10);
         return response()->json($movienamescollection, $this->successStatus);
     }
 }

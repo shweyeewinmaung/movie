@@ -3,6 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use DB;
+use App\MovieName;
+use App\Movie;
 
 class MovieResource extends JsonResource
 {
@@ -13,49 +16,25 @@ class MovieResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
-         if($this->processed == '1')
-         {
-            return [
-               'id' => $this->id,
-               'moviename' => $this->movienames->name,
-               'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
-               'outline' => $this->movienames->outline,
-               'have_episode' => $this->movienames->episode,
-               'status' => $this->movienames->status,
-               'category_id' => $this->movienames->category_id,
-               'category_name' => $this->movienames->categories->name,
-               'subcategory_id' => $this->movienames->subcategory_id,
-               'subcategory_name' => $this->movienames->subcategories->name,
-               
-               // 'subtitles' => $this->subtitles,SubtitleResource
-               'subtitles' => SubtitleResource::collection($this->subtitles),
-               'episode_name' => $this->episode_name,
-               'season_number' => $this->season_number,
-               'video_file' => asset('/img/uploads/'.$this->stream_path),
-               'upload_date' => $this->converted_for_streaming_at,
-               'created_at' => $this->created_at,
-               'updated_at' => $this->updated_at,
-           ];
-         }
-         // return [
-         //       'id' => $this->id,
-         //       'moviename' => $this->movienames->name,
-         //       'moviename_file' => asset('/images/movienames/'.$this->movienames->movie_file),
-         //       'outline' => $this->movienames->outline,
-         //       'have_episode' => $this->movienames->episode,
-         //       'status' => $this->movienames->status,
-         //       'category_id' => $this->movienames->category_id,
-         //       'category_name' => $this->movienames->categories->name,
-         //       'subcategory_id' => $this->movienames->subcategory_id,
-         //       'subcategory_name' => $this->movienames->subcategories->name,
-               
-         //       'subtitles' => $this->subtitles,
-         //       'episode_name' => $this->episode_name,
-         //       'season_number' => $this->season_number,
-         //       'video_file' => asset('/img/uploads/'.$this->stream_path),
-         //       'created_at' => $this->created_at,
-         //       'updated_at' => $this->updated_at,
-         //   ];
+    {  
+        $series_list= Movie::with(['subtitles'])->where('moviename_id',$this->id)->distinct()->get();
+           
+       return [
+          'id' => $this->id,
+        'name' => $this->name,
+         'category_id' => $this->category_id,
+         'category_name' => $this->categories->name,
+         'subcategory_id' => $this->subcategory_id,
+         'subcategory_name' => $this->subcategories->name,
+         'outline' => $this->outline,
+         'have_episode' => $this->episode,
+         'status' => $this->status,
+         'movie_file' => asset('/images/movienames/'.$this->movie_file),      
+       // 'series_list' =>  Movie::where('moviename_id', $this->id)->get(),
+         'series_list' => $series_list,
+      
+       ];
+    
+
     }
 }

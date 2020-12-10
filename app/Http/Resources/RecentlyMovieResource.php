@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Movie;
 
 class RecentlyMovieResource extends JsonResource
 {
@@ -14,7 +15,7 @@ class RecentlyMovieResource extends JsonResource
      */
     public function toArray($request)
     {
-      //return ['id' =>$this->id, ];
+     $series_list= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
         if($this->processed == '1')
          {
             return [
@@ -26,9 +27,10 @@ class RecentlyMovieResource extends JsonResource
                'subcategory_id' => $this->movienames->subcategory_id,
                'subcategory_name' => $this->movienames->subcategories->name,
                'outline' => $this->movienames->outline,
-               'episode' => $this->movienames->episode,
+               'have_episode' => $this->movienames->episode,
                'status' => $this->movienames->status,
                'movie_file' => asset('/images/movienames/'.$this->movienames->movie_file),
+              'series_list' => $series_list,
                
            ];
          }
