@@ -550,7 +550,7 @@ class MovieController extends Controller
               $movie=Movie::create([
                 'episode_name' =>  $request->get('episode_name'), 
                 'moviename_id' => $request->get('moviename_id'),
-               // 'season_number' => $request->get('season_number'),
+                'season_number' => '1',
                 'video_file' => $video_filename,
                 'disk' => 'uploads',
                 'converted_for_streaming_at' => Carbon::now(),
@@ -726,7 +726,7 @@ class MovieController extends Controller
         }
 
         $movie->episode_name=$request->get('episode_name');
-        $movie->season_number=$request->get('season_number');
+        //$movie->season_number=$request->get('season_number');
         $movie->updated_at=Carbon::now()->timestamp;
         $movie->update();
         $subtitles=Subtitle::where('movie_id',$id)->get();

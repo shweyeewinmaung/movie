@@ -207,7 +207,7 @@ video {
                        <div class="form-group">
                          <label><i class="fa fa-server"></i> Season</label>
                          
-                          <input type="number" class="form-control" placeholder="Number" name="season_number" min="1">         
+                          <input type="number" class="form-control" placeholder="Number" name="season_number" min="1" value="1">         
                        </div>
                      </div>  
                      <div class="col-md-4 pr-md-1">
