@@ -22,7 +22,7 @@ class MovieResource extends JsonResource
           // dd($series_list[1]);
        return [
           'id' => $this->id,
-        'name' => $this->name,
+          'name' => $this->name,
          'category_id' => $this->category_id,
          'category_name' => $this->categories->name,
          'subcategory_id' => $this->subcategory_id,
