@@ -19,7 +19,7 @@ class MovieResource extends JsonResource
     {  
         $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
         $series_list=$aalist->groupBy('season_number')->toArray();
-           
+          // dd($series_list[1]);
        return [
           'id' => $this->id,
         'name' => $this->name,
@@ -30,9 +30,11 @@ class MovieResource extends JsonResource
          'outline' => $this->outline,
          'have_episode' => $this->episode,
          'status' => $this->status,
-         'movie_file' => asset('/images/movienames/'.$this->movie_file),      
-       // 'series_list' =>  Movie::where('moviename_id', $this->id)->get(),
+         'movie_file' => asset('/images/movienames/'.$this->movie_file),
+         'video_url' => asset('/img/uploads/'),
+         'subtitle_url' => asset('/images/subtitles/'),      
          'series_list' => $series_list,
+        //'series_list' => SeasonResource::collection($aalist),
       
        ];
     
