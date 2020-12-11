@@ -569,17 +569,17 @@
   
  @endsection
  @section('script')
- <script src="{{ asset('/ckeditor/ckeditor.js') }}"></script>
+ <!-- <script src="{{ asset('/ckeditor/ckeditor.js') }}"></script> -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script type="text/javascript">
-  CKEDITOR.replace( 'outline', {
+ /*CKEDITOR.replace( 'outline', {
     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
     filebrowserUploadMethod: 'form'
 });
    CKEDITOR.replace( 'outlineedit', {
     filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
     filebrowserUploadMethod: 'form'
-});
+});*/
  $(document).ready(function(){ 
     
     $("#alert").fadeOut(3000);

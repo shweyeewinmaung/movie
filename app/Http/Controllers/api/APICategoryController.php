@@ -94,4 +94,10 @@ class APICategoryController extends Controller
         $movienamescollection= MovieResource::collection($movienames)->take(10);
         return response()->json($movienamescollection, $this->successStatus);
     }
+    public function moviesbycat($id) 
+    {
+         $movienames = MovieName::with(['subcategories'])->where('category_id',$id)->get();
+         $movienamescollection= MovieResource::collection($movienames); 
+         return response()->json($movienamescollection, $this->successStatus);
+    }
 }

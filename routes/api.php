@@ -33,6 +33,7 @@ Route::get('/movienamebysub/{id}','api\APICategoryController@movienamebysub');
 Route::get('/moviebyid/{id}','api\APICategoryController@moviebyid');
 Route::get('/recentlymoviename','api\APICategoryController@recentlymoviename');
 Route::get('/homeslider','api\APICategoryController@homeslider');
+Route::get('/moviesbycat/{id}','api\APICategoryController@moviesbycat');
 });
 
 
