@@ -168,10 +168,11 @@ class UserManageController extends Controller
        }
        else
        {
-            $check = User::where('email',$request->email)->where('provider_id',$request->provider_id)->first();
-        
+           
+             $check = User::where('email',$request->email)->first();
+         
        }
-      
+     // dd($check);
         //if($request->email == null){ $email ="";}else{ $email = $request->email;}
  
         if($check == null)
