@@ -82,12 +82,25 @@ class UserManageController extends Controller
           $user = Auth::user();
           $token = $user->createToken('Android');
      
-          $typeuser=Typeuser::where('user_id',$user->id)->first();
-          $user['token'] =  $token->accessToken;
-          $user['status'] = 'success';
-          $user['type'] = $typeuser;
+          $typeuser=Typeuser::where('user_id',$user->id)->first();         
+           if($typeuser->status == 'active')
+           {
+               $user['token'] =  $token->accessToken;
+               $user['status'] = 'success';
+               $user['type'] = $typeuser;
           
-          return response()->json($user,200); 
+           return response()->json($user,200); 
+           }
+           else
+           {
+            return response()->json(['status' => 'User is Not Active']);
+           }
+       
+          // $user['token'] =  $token->accessToken;
+          // $user['status'] = 'success';
+          // $user['type'] = $typeuser;
+          
+          // return response()->json($user,200); 
         }
        return response()->json(['status'=>'fail with username and password'],200);
      
@@ -136,18 +149,32 @@ class UserManageController extends Controller
         return response()->json($user,200); 
     }
 
-    public function userroute(Request $request) 
+    public function socialroute(Request $request) 
     { 
-        if($request->email)
-        {
-           $check = User::where('email',$request->email)->first();
+        $validated_data = Validator::make($request->all(), [ 
+            'provider_id' => 'required', 
+            'provider' => 'required',
+            //'password' => 'required',            
+        ]);
+
+        if ($validated_data->fails()) 
+        { 
+            return response()->json(['status'=>$validated_data->errors()], 401);            
         }
-        else
-        {
-           $check = User::where('provider_id',$request->provider_id)->where('provider',$request->provider)->first();
-        }
+        
+       if($request->email == null)
+       {
+          $check = User::where('provider_id',$request->provider_id)->where('provider',$request->provider)->first();
+       }
+       else
+       {
+            $check = User::where('email',$request->email)->where('provider_id',$request->provider_id)->first();
+        
+       }
+      
         //if($request->email == null){ $email ="";}else{ $email = $request->email;}
-        if(!$check)
+ 
+        if($check == null)
         {
             $user = new User;
             $last_usercode = User::orderBy('id','DESC')->first();
@@ -178,7 +205,8 @@ class UserManageController extends Controller
         else
         {
            $typeuser=Typeuser::where('user_id',$check->id)->first();
-           if($typeuser->status == 'free')
+           //dd($typeuser->status);
+           if($typeuser->status == 'active')
            {
                $users = Auth::loginUsingId($check->id);
 
@@ -197,37 +225,37 @@ class UserManageController extends Controller
        // $check = User::where('email',$request->email)->first();
     }
     
-    public function loginwithsocial(Request $request) 
-    {
+    // public function loginwithsocial(Request $request) 
+    // {
 
-       $check = User::where('email',$request->email)->first();
+    //    $check = User::where('email',$request->email)->first();
 
-        if(!$check)
-        {
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = bcrypt(123456);
-            $user->provider_id = "123";
-            $user->provider = "facebook";
-            $user->save();
+    //     if(!$check)
+    //     {
+    //         $user = new User;
+    //         $user->name = $request->name;
+    //         $user->email = $request->email;
+    //         $user->password = bcrypt(123456);
+    //         $user->provider_id = "123";
+    //         $user->provider = "facebook";
+    //         $user->save();
 
-            $users = Auth::loginUsingId($user->id);
-            $users['token'] =  $user->createToken('Android')->accessToken;
-            $users['status'] = 'success with new user';
-            return response()->json($users,200);
+    //         $users = Auth::loginUsingId($user->id);
+    //         $users['token'] =  $user->createToken('Android')->accessToken;
+    //         $users['status'] = 'success with new user';
+    //         return response()->json($users,200);
             
-        }
-        else
-        {
-           //$users = User::findOrFail($check->id);
-           $users = Auth::loginUsingId($check->id);
-           $users['token'] =  $users->createToken('Android')->accessToken;
-           $users['status'] = 'success with old user';
-           return response()->json($users,200);
-        }
+    //     }
+    //     else
+    //     {
+    //        //$users = User::findOrFail($check->id);
+    //        $users = Auth::loginUsingId($check->id);
+    //        $users['token'] =  $users->createToken('Android')->accessToken;
+    //        $users['status'] = 'success with old user';
+    //        return response()->json($users,200);
+    //     }
        
-    }
+    // }
     
 
     /**

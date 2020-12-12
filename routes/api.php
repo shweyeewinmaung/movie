@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::post('alluser','api\UserManageController@index');
-Route::get('/sociallogin','api\UserManageController@loginwithsocial');
+//Route::post('alluser','api\UserManageController@index');
+//Route::post('/sociallogin','api\UserManageController@loginwithsocial');
 
-Route::get('/userroute','api\UserManageController@userroute');
+Route::post('/socialuserroute','api\UserManageController@socialroute');
 Route::post('/userrouteregister','api\UserManageController@userrouteregister');
 Route::post('/userroutelogin','api\UserManageController@userroutelogin');
 
