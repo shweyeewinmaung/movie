@@ -181,7 +181,7 @@ li.lineheightstyle{ line-height: 2.5; }
                <canvas id="chart2"></canvas>
         </div>
            </div> -->
-           @if($adslistsall->count() < 0)
+           @if($adslistsall->count() <= 0)
            <div class="card-body">
              No Advertising To Show For Today
            </div>
