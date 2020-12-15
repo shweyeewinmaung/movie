@@ -44,6 +44,11 @@
         </a>
       </li>
        <li>
+        <a href="{{route('ads.list')}}">
+         <i class="zmdi zmdi-calendar-check"></i><span>Advertising</span>
+        </a>
+      </li>
+       <li>
         <a href="{{route('user.list')}}">
          <i class="fa fa-user"></i><span>User</span>
         </a>

@@ -137,7 +137,23 @@ Route::prefix('admin')->group(function(){
 // });
   /*************************************************************/
   /***********************Advertising Start*************************************/
-  // Route::get('/AdvertisingList','UserController@index')->name('user.list');
+  Route::get('/AdvertisingList','AdvertisingController@index')->name('ads.list');
+   Route::get('/AdvertisingList/search/post', 'AdvertisingController@searchdate')->name('ads.searchdate');
+  Route::get('/AdvertisingAdd','AdvertisingController@create')->name('ads.create');
+  Route::post('/AdvertisingAdd','AdvertisingController@store')->name('ads.store');
+  Route::get('/AdvertisingEdit/{id}','AdvertisingController@edit')->name('ads.edit');
+  Route::post('/AdvertisingList/{id}/edit','AdvertisingController@update')->name('ads.update');
+  Route::post('/AdvertisingList/{id}/delete', 'AdvertisingController@destroy')->name('ads.delete');
+
+  Route::get('/MediaLibrary','AvatorController@index')->name('avator.index');
+  Route::post('/MediaLibraryCreate','AvatorController@store')->name('avator.store');
+  Route::post('/MediaLibraryDelete/{id}','AvatorController@destroy')->name('avator.destroy');
+
+  Route::get('/MediaLibrarySelected/{id}','AdvertisingController@select')->name('avator.select');
+
+  Route::get('/MediaLibrarySelectedEdit/{id}/{avator_id}','AdvertisingController@selectedit')->name('avator.selectedit');
+
+  Route::get('/MediaLibraryEdit/{id}','AvatorController@indexedit')->name('avator.indexedit');
   /***********************Advertising End*************************************/
   /***********************History Start*************************************/
   // Route::get('/history','HistoryController@index')->name('history.list');

@@ -667,7 +667,7 @@ video {
 
                       
                         <!-- Modal body -->
-                        <div class="modal-body">
+                       
                          
                           <div class="row">
                      <div class="col-md-12 pr-md-1">

@@ -95,7 +95,7 @@
                      <th>Name</th>
                      <th>Code</th>
                      <th>Email</th>
-                     <th>Provider-ID</th>
+                    <!--  <th>Provider-ID</th> -->
                      <th>Provider</th>
 
                      <th>Type</th>
@@ -115,7 +115,7 @@
 	                   	<td>{{$userslist->name}}</td>
 	                   	<td>{{$userslist->user_code}}</td>
 	                    <td>{{$userslist->email}}</td>
-	                   	<td>{{$userslist->provider_id}}</td>
+	                   <!-- 	<td>{{$userslist->provider_id}}</td> -->
 	                    <td>{{$userslist->provider}}</td>
 
 	                    @foreach($userslist->typeuser as $type)

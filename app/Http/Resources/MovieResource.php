@@ -6,6 +6,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use DB;
 use App\MovieName;
 use App\Movie;
+use App\Advertising;
+use App\Avator;
+use Carbon\Carbon;
 
 class MovieResource extends JsonResource
 {
@@ -20,6 +23,11 @@ class MovieResource extends JsonResource
         $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
        // $series_list=$aalist->groupBy('season_number')->toArray();
           // dd($series_list[1]);
+        $date = Carbon::now();
+        $todaydate= $date->toDateString();
+        $adslist=Advertising::where('from_date', '<=', "{$todaydate}")
+              ->where('to_date', '>=', "{$todaydate}")->get(); 
+              
        return [
           'id' => $this->id,
           'name' => $this->name,
@@ -31,6 +39,7 @@ class MovieResource extends JsonResource
          'have_episode' => $this->episode,
          'status' => $this->status,
          'movie_file' => asset('/images/movienames/'.$this->movie_file),
+         //'adslist' => AdsResource::collection($adslist),
          // 'video_url' => asset('/img/uploads/'),
          // 'subtitle_url' => asset('/images/subtitles/'),      
         // 'series_list' => $aalist,

@@ -105,8 +105,8 @@ li.lineheightstyle{ line-height: 2.5; }
 
  
     
-  <!-- <div class="row">
-     <div class="col-12 col-lg-8 col-xl-8">
+   <div class="row">
+   <!--   <div class="col-12 col-lg-8 col-xl-8">
       <div class="card">
      <div class="card-header">Site Traffic
        <div class="card-action">
@@ -156,62 +156,75 @@ li.lineheightstyle{ line-height: 2.5; }
      </div>
      
     </div>
-   </div>
+   </div> -->
 
-     <div class="col-12 col-lg-4 col-xl-4">
+     <div class="col-12 col-lg-12 col-xl-12">
         <div class="card">
-           <div class="card-header">Weekly sales
-             <div class="card-action">
+           <div class="card-header">Today Advertising
+            <!--  <div class="card-action">
              <div class="dropdown">
-             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+           <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
               <i class="icon-options"></i>
              </a>
-              <div class="dropdown-menu dropdown-menu-right">
+             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="javascript:void();">Action</a>
               <a class="dropdown-item" href="javascript:void();">Another action</a>
               <a class="dropdown-item" href="javascript:void();">Something else here</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>
+               </div>  
               </div>
-             </div>
+             </div> -->
            </div>
-           <div class="card-body">
+           <!-- <div class="card-body">
          <div class="chart-container-2">
                <canvas id="chart2"></canvas>
         </div>
+           </div> -->
+           @if($adslistsall->count() < 0)
+           <div class="card-body">
+             No Advertising To Show For Today
            </div>
+           @else
+          
            <div class="table-responsive">
              <table class="table align-items-center">
                <tbody>
+                
+                  <tr>
+                    <th><i class="fa fa-circle text-white mr-2"></i>No</th>
+                    <th>Company</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Time(Seconds)</th>
+                    <th>Type</th>
+                  </tr>
+ 
+                 @foreach($adslists as $key=>$adslist) 
                  <tr>
-                   <td><i class="fa fa-circle text-white mr-2"></i> Direct</td>
-                   <td>$5856</td>
-                   <td>+55%</td>
+                   <td><i class="fa fa-circle text-white mr-2"></i>  {{$adslists->firstItem() +$key}}</td>
+                   <td>{{$adslist->company_name}}</td>
+                   <td>{{$adslist->from_date}}</td>
+                   <td>{{$adslist->to_date}}</td>
+                   <td>{{$adslist->display_time}}</td>
+                   <td>{{$adslist->display_type}}</td>
+                   
                  </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-1 mr-2"></i>Affiliate</td>
-                   <td>$2602</td>
-                   <td>+25%</td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-2 mr-2"></i>E-mail</td>
-                   <td>$1802</td>
-                   <td>+15%</td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-3 mr-2"></i>Other</td>
-                   <td>$1105</td>
-                   <td>+5%</td>
-                 </tr>
-               </tbody>
+                @endforeach
+               
              </table>
            </div>
+            <div class="card-body" >
+              <p style="float: right;">Total {{$adslistsall->count()}}</p>
+           {{$adslists->links()}}
+            @endif
+           </div>
+         
          </div>
      </div>
-  </div> --><!--End Row-->
+  </div> <!--End Row
   
- <!--  <div class="row">
+ <div class="row">
    <div class="col-12 col-lg-12">
      <div class="card">
        <div class="card-header">Recent Order Tables

@@ -67,6 +67,12 @@ return [
             'url' => '/img/uploads',
             'visibility' => 'public',
         ],
+        'ads' => [
+            'driver' => 'local',
+            'root' => public_path('img/ads'),
+            'url' => '/img/ads',
+            'visibility' => 'public',
+        ],
 
 
         's3' => [

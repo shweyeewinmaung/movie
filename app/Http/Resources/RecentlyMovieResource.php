@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Movie;
+use App\Advertising;
+use App\Avator;
+use Carbon\Carbon;
 
 class RecentlyMovieResource extends JsonResource
 {
@@ -16,8 +19,13 @@ class RecentlyMovieResource extends JsonResource
     public function toArray($request)
     {
      $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
+
+      $date = Carbon::now();
+        $todaydate= $date->toDateString();
+        $adslist=Advertising::where('from_date', '<=', "{$todaydate}")
+              ->where('to_date', '>=', "{$todaydate}")->get(); 
      // $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
-        $series_list=$aalist->groupBy('season_number')->toArray();
+     //   $series_list=$aalist->groupBy('season_number')->toArray();
         if($this->processed == '1')
          {
             return [
@@ -32,6 +40,7 @@ class RecentlyMovieResource extends JsonResource
                'have_episode' => $this->movienames->episode,
                'status' => $this->movienames->status,
                'movie_file' => asset('/images/movienames/'.$this->movienames->movie_file),
+              // 'adslist' => AdsResource::collection($adslist),
                // 'video_url' => asset('/img/uploads/'),
                // 'subtitle_url' => asset('/images/subtitles/'),   
               //'series_list' => $series_list,

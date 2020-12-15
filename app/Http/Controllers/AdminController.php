@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Category;
 use App\SubCategory;
+use App\Advertising;
+use App\Avator;
 use DB;
 
 class AdminController extends Controller
@@ -63,7 +65,18 @@ class AdminController extends Controller
         //dd($today);
         $todayusers = User::where('created_at', 'LIKE', "%{$today}%");
 
-        return view('admin',compact('categories','users','activeusers','inactiveusers','freeusers','preusers','todayusers'));
+        $date = Carbon::now();
+        $todaydate= $date->toDateString();
+
+       $adslistsall=Advertising::where('from_date', '<=', "{$todaydate}")
+              ->where('to_date', '>=', "{$todaydate}"); 
+       
+        $adslists=Advertising::where('from_date', '<=', "{$todaydate}")
+              ->where('to_date', '>=', "{$todaydate}")->orderBy('id','desc')
+               ->paginate(30);       
+
+        
+        return view('admin',compact('categories','users','activeusers','inactiveusers','freeusers','preusers','todayusers','adslists','adslistsall'));
     }
     public function register()
     {

@@ -15,7 +15,8 @@
         "laravel/framework": "^6.20",
         "laravel/passport": "9.*",
         "laravel/tinker": "^2.5",
-        "pbmedia/laravel-ffmpeg": "^7.4"
+        "pbmedia/laravel-ffmpeg": "^7.4",
+        "spatie/laravel-medialibrary": "^7.0.0"
     },
     "require-dev": {
         "facade/ignition": "^1.16.4",

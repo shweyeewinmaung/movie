@@ -10,12 +10,15 @@ use App\SubCategory;
 use App\MovieName;
 use App\Movie;
 use App\Subtitle;
+use App\Avator;
+use App\Advertising;
 use DB;
 use App\Http\Resources\SubCategoryResource;
 use App\Http\Resources\MovieNameResource;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\SubtitleResource;
 use App\Http\Resources\RecentlyMovieResource;
+use App\Http\Resources\AdsResource;
 
 class APICategoryController extends Controller
 {

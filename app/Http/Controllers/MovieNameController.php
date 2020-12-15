@@ -232,7 +232,6 @@ class MovieNameController extends Controller
         {
            $moviename->delete();
         }
-
         
          Comment::create([
             'content' => Auth::user()->name ." deleted Movie Name ".$moviename->name,
