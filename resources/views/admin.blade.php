@@ -220,7 +220,7 @@ li.lineheightstyle{ line-height: 2.5; }
             @endif
            </div>
          
-         </div>
+        
      </div>
   </div> <!--End Row
   

@@ -571,7 +571,7 @@ video {
                               i += 1;
 
                               document.getElementById("addmyf{{$movieslist->id}}").value= i;
-                              $('#dynamic_fieldmyfmy{{$movieslist->id}}').append('<div class="row" id="row'+i+'"><div class="col-md-5 pr-md-1"><div class="form-group"><input type="text" class="form-control"  name="subtitle_name[]" placeholder="Enter Subtitle Name"></div></div><div class="col-md-5 pr-md-1"><div class="form-group"><input type="file" class="form-control"  name="subtitle_file[]"></div></div><div class="col-md-2 pr-md-1"><div class="form-group"><button type="button" class="btn-remove btn btn-danger"  name="remove" id="'+i+'" ><i class="icon-close"></i></button></div></div></div></div>');
+                              $('#dynamic_fieldmyfmy{{$movieslist->id}}').append('<div class="row" id="row'+i+'"><div class="col-md-5 pr-md-1"><div class="form-group"><select class="form-control" name="subtitle_name[]"><option  value="English">English</option><option  value="Myanmar">Myanmar</option></select></div></div><div class="col-md-5 pr-md-1"><div class="form-group"><input type="file" class="form-control"  name="subtitle_file[]"></div></div><div class="col-md-2 pr-md-1"><div class="form-group"><button type="button" class="btn-remove btn btn-danger"  name="remove" id="'+i+'" ><i class="icon-close"></i></button></div></div></div></div>');
                             $(document).on('click','.btn-remove',function(){
 
                               var button_id = $(this).attr('id');
@@ -755,7 +755,7 @@ video {
         button. onclick = function() {
         i += 1;
         document.getElementById("add").value= i;
-        $('#dynamic_field').append('<div class="row" id="row'+i+'"><div class="col-md-5 pr-md-1"><div class="form-group"><input type="text" class="form-control"  name="subtitle_name[]" placeholder="Enter Subtitle Name"></div></div><div class="col-md-5 pr-md-1"><div class="form-group"><input type="file" class="form-control"  name="subtitle_file[]"></div></div><div class="col-md-2 pr-md-1"><div class="form-group"><button type="button" class="btn-remove btn btn-danger"  name="remove" id="'+i+'" ><i class="icon-close"></i></button</div></div></div></div>');
+        $('#dynamic_field').append('<div class="row" id="row'+i+'"><div class="col-md-5 pr-md-1"><div class="form-group"><select class="form-control" name="subtitle_name[]"><option  value="English">English</option><option  value="Myanmar">Myanmar</option></select></div></div><div class="col-md-5 pr-md-1"><div class="form-group"><input type="file" class="form-control"  name="subtitle_file[]"></div></div><div class="col-md-2 pr-md-1"><div class="form-group"><button type="button" class="btn-remove btn btn-danger"  name="remove" id="'+i+'" ><i class="icon-close"></i></button</div></div></div></div>');
       $(document).on('click','.btn-remove',function(){
 
         var button_id = $(this).attr('id');
