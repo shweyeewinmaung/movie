@@ -34,7 +34,7 @@ class APICategoryController extends Controller
 
     public function subcategories($id) 
     {
-    	$sub = SubCategory::with(['categories'])->where('category_id',$id)->orderBy('name','ASC')->get();
+    	$sub = SubCategory::with(['categories'])->where('category_id',$id)->orderBy('id','ASC')->get();
     	 
     	$subcategoriescollection= SubCategoryResource::collection($sub);
     	return response()->json($subcategoriescollection, $this->successStatus);
