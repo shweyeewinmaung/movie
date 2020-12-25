@@ -18,6 +18,7 @@ use App\Http\Resources\MovieNameResource;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\SubtitleResource;
 use App\Http\Resources\RecentlyMovieResource;
+use App\Http\Resources\SamplelinkResource;
 use App\Http\Resources\AdsResource;
 
 class APICategoryController extends Controller
@@ -102,5 +103,13 @@ class APICategoryController extends Controller
          $movienames = MovieName::with(['subcategories'])->where('category_id',$id)->get();
          $movienamescollection= MovieResource::collection($movienames); 
          return response()->json($movienamescollection, $this->successStatus);
+    }
+
+     public function samplelink() 
+    {
+        $movies = Movie::with(['subtitles','movienames'])->orderBy('id', 'desc')->groupBy('moviename_id')->take(10)->get();
+        
+        $moviescollection= SamplelinkResource::collection($movies); 
+        return response()->json($moviescollection, $this->successStatus); 
     }
 }
