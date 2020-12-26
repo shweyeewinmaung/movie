@@ -27,7 +27,7 @@ class SamplelinkResource extends JsonResource
      //          ->where('to_date', '>=', "{$todaydate}")->get(); 
       $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
      // return $aalist;
-      $series_list=$aalist->groupBy('season_number');
+      $series_list=$aalist->groupBy('season_number')->toArray();
         if($this->processed == '1')
          {
             if($this->movienames->episode == '0')
