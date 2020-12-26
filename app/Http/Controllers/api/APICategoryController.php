@@ -20,6 +20,9 @@ use App\Http\Resources\SubtitleResource;
 use App\Http\Resources\RecentlyMovieResource;
 use App\Http\Resources\SamplelinkResource;
 use App\Http\Resources\SampleHomeSliderResource;
+use App\Http\Resources\SampleHomeSliderMovieResource;
+use App\Http\Resources\SampleHomeSliderSeasonResource;
+use App\Http\Resources\SeasonResource;
 use App\Http\Resources\AdsResource;
 
 class APICategoryController extends Controller
@@ -118,5 +121,20 @@ class APICategoryController extends Controller
         $movienames=MovieName::with(['subcategories'])->where('show_in_slider','1')->orderBy('id','desc')->get();
         $movienamescollection= SampleHomeSliderResource::collection($movienames)->take(10);
         return response()->json($movienamescollection, $this->successStatus);
+    }
+    public function samplehomeslidermovie($id) 
+    {
+       // $movie=Movie::with(['subtitles','movienames'])->where('moviename_id',$id)->orderBy('id', 'asc')->groupBy('season_number')->get();
+        $moviename=MovieName::with(['subcategories'])->where('id',$id)->orderBy('id','desc')->get();
+       $moviecollection= SampleHomeSliderMovieResource::collection($moviename);
+        return response()->json($moviecollection, $this->successStatus);
+    }
+    public function samplehomeslidermovieid($id,$season) 
+    {
+       
+         $movie=Movie::with(['subtitles'])->where('moviename_id',$id)->where('season_number',$season)->orderBy('id', 'asc')->get();
+        // $moviename=MovieName::with(['subcategories'])->where('id',$id)->orderBy('id','desc')->get();
+         $moviecollection= SeasonResource::collection($movie);
+       return response()->json($moviecollection, $this->successStatus);
     }
 }
