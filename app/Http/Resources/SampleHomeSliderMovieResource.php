@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Movie;
+use App\Advertising;
+use App\Avator;
+use Carbon\Carbon;
 
 class SampleHomeSliderMovieResource extends JsonResource
 {
@@ -18,6 +21,11 @@ class SampleHomeSliderMovieResource extends JsonResource
       $movie=Movie::with(['subtitles','movienames'])->where('moviename_id',$this->id)->orderBy('id', 'asc')->groupBy('season_number')->get();
 
       $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->id)->get();
+      
+      $date = Carbon::now();
+      $todaydate= $date->toDateString();
+      $adslist=Advertising::where('from_date', '<=', "{$todaydate}")
+              ->where('to_date', '>=', "{$todaydate}")->get(); 
 
 
       if($this->episode == '1')
@@ -50,6 +58,7 @@ class SampleHomeSliderMovieResource extends JsonResource
           'outline' => $this->outline,
           'have_episode' => $this->episode,
           'status' => $this->status,
+           //'adslist' => AdsResource::collection($adslist),
           // 'video_url' => asset('/img/uploads/'),
           // 'subtitle_url' => asset('/images/subtitles/'),  
           'movie_file' => asset('/images/movienames/'.$this->movie_file),

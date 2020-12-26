@@ -20,7 +20,7 @@ class RecentlyMovieResource extends JsonResource
     {
      $aalist= Movie::with(['subtitles'])->where('moviename_id',$this->moviename_id)->get();
 
-      $date = Carbon::now();
+        $date = Carbon::now();
         $todaydate= $date->toDateString();
         $adslist=Advertising::where('from_date', '<=', "{$todaydate}")
               ->where('to_date', '>=', "{$todaydate}")->get(); 
