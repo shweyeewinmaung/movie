@@ -36,6 +36,7 @@ Route::get('/homeslider','api\APICategoryController@homeslider');
 Route::get('/moviesbycat/{id}','api\APICategoryController@moviesbycat');
 
 Route::get('/samplelink','api\APICategoryController@samplelink');
+Route::get('/samplehomeslider','api\APICategoryController@samplehomeslider');
 });
 
 

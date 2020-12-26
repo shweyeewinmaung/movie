@@ -19,6 +19,7 @@ use App\Http\Resources\MovieResource;
 use App\Http\Resources\SubtitleResource;
 use App\Http\Resources\RecentlyMovieResource;
 use App\Http\Resources\SamplelinkResource;
+use App\Http\Resources\SampleHomeSliderResource;
 use App\Http\Resources\AdsResource;
 
 class APICategoryController extends Controller
@@ -105,11 +106,17 @@ class APICategoryController extends Controller
          return response()->json($movienamescollection, $this->successStatus);
     }
 
-     public function samplelink() 
+    public function samplelink() 
     {
         $movies = Movie::with(['subtitles','movienames'])->orderBy('id', 'desc')->groupBy('moviename_id')->take(10)->get();
         
         $moviescollection= SamplelinkResource::collection($movies); 
         return response()->json($moviescollection, $this->successStatus); 
+    }
+    public function samplehomeslider() 
+    {
+        $movienames=MovieName::with(['subcategories'])->where('show_in_slider','1')->orderBy('id','desc')->get();
+        $movienamescollection= SampleHomeSliderResource::collection($movienames)->take(10);
+        return response()->json($movienamescollection, $this->successStatus);
     }
 }
