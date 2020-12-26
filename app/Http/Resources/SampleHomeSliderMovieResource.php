@@ -50,6 +50,8 @@ class SampleHomeSliderMovieResource extends JsonResource
           'outline' => $this->outline,
           'have_episode' => $this->episode,
           'status' => $this->status,
+          'video_url' => asset('/img/uploads/'),
+          'subtitle_url' => asset('/images/subtitles/'),  
           'movie_file' => asset('/images/movienames/'.$this->movie_file),
           'movie_list' => $aalist,
            
