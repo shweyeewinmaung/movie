@@ -43,6 +43,8 @@ Route::get('/samplehomeslidermovieid/{id}/{season}','api\APICategoryController@s
 
 Route::get('/samplerecent','api\APICategoryController@samplerecent');
 
+Route::get('/samplemoviebycat/{id}','api\APICategoryController@samplemoviebycat');
+
 });
 
 

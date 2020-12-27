@@ -17,6 +17,7 @@ class SampleHomeSliderSeasonResource extends JsonResource
         return[
          // 'id' => $this->id,
           'season_number' => $this->season_number,
+          'season_name'=>'Season '.$this->season_number
       ];
     }
 }

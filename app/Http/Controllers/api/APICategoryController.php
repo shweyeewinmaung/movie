@@ -140,8 +140,14 @@ class APICategoryController extends Controller
     {
         $movies = Movie::with(['subtitles','movienames'])->orderBy('id', 'desc')->groupBy('moviename_id')->take(10)->get();
          $moviescollection= SampleRecentResource::collection($movies); 
-        return response()->json($moviescollection, $this->successStatus); 
-       
+        return response()->json($moviescollection, $this->successStatus);        
+    }
+
+    public function samplemoviebycat($id) 
+    {
+         $movienames = MovieName::with(['subcategories'])->where('category_id',$id)->orderBy('name','asc')->get();
+         $movienamescollection= SampleHomeSliderResource::collection($movienames); 
+         return response()->json($movienamescollection, $this->successStatus);              
     }
    
 }
