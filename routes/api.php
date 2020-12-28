@@ -45,6 +45,8 @@ Route::get('/samplerecent','api\APICategoryController@samplerecent');
 
 Route::get('/samplemoviebycat/{id}','api\APICategoryController@samplemoviebycat');
 
+Route::get('/samplesearchmovie/{name}','api\APICategoryController@samplesearchmovie');
+
 });
 
 

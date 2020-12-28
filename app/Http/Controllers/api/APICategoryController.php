@@ -149,5 +149,11 @@ class APICategoryController extends Controller
          $movienamescollection= SampleHomeSliderResource::collection($movienames); 
          return response()->json($movienamescollection, $this->successStatus);              
     }
+    public function samplesearchmovie($name) 
+    {
+       $moviename=MovieName::with(['subcategories'])->where('name', 'LIKE', "%{$name}%")->orderBy('id','desc')->get();
+       $moviecollection= SampleHomeSliderMovieResource::collection($moviename);
+       return response()->json($moviecollection, $this->successStatus);
+    }
    
 }
