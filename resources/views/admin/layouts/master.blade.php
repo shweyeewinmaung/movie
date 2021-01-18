@@ -33,16 +33,16 @@
     .icon-arrow-down::before {
        font-size: 6px;
      }
-     .container-fluid { 
+ /*    .container-fluid { 
   padding-right: 0px;
   padding-left: 0px;  
-  }
-  .content-wrapper {
+  }*/
+ /* .content-wrapper {
    padding-left: 1px;
     padding-right: 1px;
     padding-bottom: 20px;
     padding-top: 61px;
-  }
+  }*/
   .row.row-group>div {
     border-right: 1px solid rgba(255, 255, 255, 0.12);
      border-bottom: 1px solid rgba(255, 255, 255, 0.12);

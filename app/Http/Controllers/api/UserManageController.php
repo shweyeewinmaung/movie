@@ -130,7 +130,15 @@ class UserManageController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $last_usercode = User::orderBy('id','DESC')->first();
-        $user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "0123", STR_PAD_LEFT);
+        //$user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "0123", STR_PAD_LEFT);
+         if($last_usercode == null)
+            {
+                $user->user_code = '#00100';
+            }
+            else
+            {
+                $user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "00100", STR_PAD_LEFT);
+            }
         $user->save();
        // dd($user);
         $typeuser = new Typeuser;
@@ -179,7 +187,15 @@ class UserManageController extends Controller
         {
             $user = new User;
             $last_usercode = User::orderBy('id','DESC')->first();
-            $user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "0123", STR_PAD_LEFT);
+            if($last_usercode == null)
+            {
+                $user->user_code = '#00100';
+            }
+            else
+            {
+                $user->user_code = '#'.str_pad($last_usercode->id + 1, 5, "00100", STR_PAD_LEFT);
+            }
+            
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make(123456);
@@ -218,7 +234,7 @@ class UserManageController extends Controller
            }
            else
            {
-            return response()->json(['status' => 'fail']);
+            return response()->json(['status' => 'User is Not Active']);
            }
           
         }

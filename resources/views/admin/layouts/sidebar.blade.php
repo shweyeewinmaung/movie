@@ -53,6 +53,11 @@
          <i class="fa fa-user"></i><span>User</span>
         </a>
       </li>
+       <li>
+        <a href="{{route('contact.index')}}">
+         <i class="fa fa-home"></i><span>Contact</span>
+        </a>
+      </li>
       @canany(['issuper', 'isadmin']) 
       <li>
         <a href="{{route('comment.list')}}">

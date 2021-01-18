@@ -12,6 +12,7 @@ use App\Movie;
 use App\Subtitle;
 use App\Avator;
 use App\Advertising;
+use App\Contact;
 use DB;
 use App\Http\Resources\SubCategoryResource;
 use App\Http\Resources\MovieNameResource;
@@ -154,6 +155,12 @@ class APICategoryController extends Controller
        $moviename=MovieName::with(['subcategories'])->where('name', 'LIKE', "%{$name}%")->orderBy('id','desc')->get();
        $moviecollection= SampleHomeSliderMovieResource::collection($moviename);
        return response()->json($moviecollection, $this->successStatus);
+    }
+
+    public function contact() 
+    {
+        $contact=Contact::whereId(1)->get();
+        return response()->json($contact);       
     }
    
 }

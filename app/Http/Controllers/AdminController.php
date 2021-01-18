@@ -39,6 +39,10 @@ class AdminController extends Controller
         //return redirect('/');
         return redirect('admin/login');
     }
+    public function live()
+    {
+      return view('admin.lives.live');
+    }
     /**
      * Show the application dashboard.
      *

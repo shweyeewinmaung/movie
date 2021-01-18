@@ -155,43 +155,15 @@ Route::prefix('admin')->group(function(){
 
   Route::get('/MediaLibraryEdit/{id}','AvatorController@indexedit')->name('avator.indexedit');
   /***********************Advertising End*************************************/
-  /***********************History Start*************************************/
-  // Route::get('/history','HistoryController@index')->name('history.list');
-  // Route::get('/historylist/search/post', 'HistoryController@searchpost')->name('history.search');
 
-  /***********************History End*************************************/
-  /***********************FTTH Start*************************************/
-  // Route::get('/FTTH','FTTHController@index')->name('FTTH.list'); 
-  // Route::post('/DeviceEntry','FTTHController@store')->name('device.entry.submit');
-  // Route::get('/devicelist/search/post', 'FTTHController@searchpost')->name('device.search'); 
-  // Route::post('/device/{id}/delete', 'FTTHController@destroy')->name('device.delete');
-  // Route::post('/device/{id}/edit','FTTHController@update')->name('device.edit.submit');
+  /***********************Contact Us Start*************************************/
+   Route::get('/Contact','ContactController@index')->name('contact.index');
+   Route::post('/ContactSave','ContactController@store')->name('contact.store');
+   Route::post('/ContactUpdate/{id}','ContactController@update')->name('contact.update');
 
-  /***********************FTTH End*************************************/
-  /***********************Category Start*************************************/
-  // Route::get('/Category/{title}','CategoryController@index')->name('Category.list'); 
-  // Route::get('/CategoryEntry/{title}','CategoryController@create')->name('Category.entry');
-  // Route::post('/CategoryEntry/{title}','CategoryController@store')->name('Category.entry.submit');
-
- 
-
-  /***********************Category End*************************************/
-  /***********************Items Start*************************************/
-  // Route::post('/ItemnameEntry','ItemnameController@store')->name('itemname.store.submit');
-  // Route::get('/ItemnameList/{title}','ItemnameController@index')->name('itemname.list');
-  // Route::post('/ItemnameList/{id}/edit','ItemnameController@update')->name('itemname.edit.submit');
-  // Route::post('/ItemnameList/{id}/delete', 'ItemnameController@destroy')->name('device.delete');
-  // Route::get('/ItemnameList/show/{title}/{id}','ItemnameController@show')->name('itemnamelist.show');
-  // Route::get('/ItemnameList/{title}/search/post', 'ItemnameController@searchpost')->name('ItemnameList.search');
-  /***********************Items Start*************************************/
-  /***********************Supplier Start*************************************/
-  // Route::post('/SupplierEntry','SupplierController@store')->name('supplier.store.submit');
-  // Route::get('/SupplierList','SupplierController@index')->name('supplier.list');
-  // Route::post('/Supplier/{id}/delete', 'SupplierController@destroy')->name('device.delete');
-  // Route::post('/Supplier/{id}/edit','SupplierController@update')->name('supplier.edit.submit');
-  // Route::get('/supplierlist/search/post', 'SupplierController@searchpost')->name('supplier.search'); 
-
-  /***********************Supplier End*************************************/
+  /***********************Contact Us End*************************************/
+  
+ //Route::get('/live','AdminController@live')->name('live');
   
 });
  Route::get('/users/logout','Auth\LoginController@userLogout')->name('user.logout');

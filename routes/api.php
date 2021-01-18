@@ -47,6 +47,8 @@ Route::get('/samplemoviebycat/{id}','api\APICategoryController@samplemoviebycat'
 
 Route::get('/samplesearchmovie/{name}','api\APICategoryController@samplesearchmovie');
 
+Route::get('/contact','api\APICategoryController@contact');
+
 });
 
 
