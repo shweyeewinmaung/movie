@@ -14,6 +14,9 @@ use App\Avator;
 use App\Advertising;
 use App\Contact;
 use DB;
+use App\TvCategory;
+use App\Tvchannel;
+use App\Http\Resources\TvchannelResource;
 use App\Http\Resources\SubCategoryResource;
 use App\Http\Resources\MovieNameResource;
 use App\Http\Resources\MovieResource;
@@ -161,6 +164,18 @@ class APICategoryController extends Controller
     {
         $contact=Contact::whereId(1)->get();
         return response()->json($contact);       
+    }
+
+    public function tvcategories() 
+    {
+        $tvcategories=TvCategory::orderBy('name','ASC')->get();         
+        return response()->json($tvcategories, $this->successStatus); 
+    }
+    public function tvchannelsbytvcat($id) 
+    {
+        $tvcat = Tvchannel::with(['tvcategories'])->where('tvcategory_id',$id)->orderBy('id','ASC')->get();
+        $tvcategoriescollection= TvchannelResource::collection($tvcat);
+        return response()->json($tvcategoriescollection, $this->successStatus);
     }
    
 }

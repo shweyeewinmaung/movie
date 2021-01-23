@@ -49,6 +49,16 @@
         </a>
       </li>
        <li>
+        <a href="{{route('tvcategory.list')}}">
+         <i class="zmdi zmdi-format-list-bulleted"></i> <span> TV Category</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{route('tvchannel.list')}}">
+         <i class="fa fa-television"></i> <span> TV Channel</span>
+        </a>
+      </li>
+      <li>
         <a href="{{route('user.list')}}">
          <i class="fa fa-user"></i><span>User</span>
         </a>

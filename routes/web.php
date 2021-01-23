@@ -162,6 +162,23 @@ Route::prefix('admin')->group(function(){
    Route::post('/ContactUpdate/{id}','ContactController@update')->name('contact.update');
 
   /***********************Contact Us End*************************************/
+  /***********************TV Category Start*************************************/
+
+  Route::get('/TVCategoryList','TvCategoryController@index')->name('tvcategory.list');
+  Route::post('/TVCategoryStore','TVCategoryController@store')->name('tvcategory.store');
+  Route::get('/TVCategoryList/search/post', 'TVCategoryController@searchtvcategory')->name('tvcategory.search');
+  Route::post('/TVCategoryList/{id}/edit','TVCategoryController@update')->name('tvcategory.edit');
+  Route::post('/TVCategoryList/{id}/delete', 'TVCategoryController@destroy')->name('tvcategory.delete');
+
+  /***********************TV Category End*************************************/
+  /***********************TV Channel Start*************************************/
+  Route::get('/TVChannelList','TvChannelController@index')->name('tvchannel.list');
+  Route::get('/TVChannelList/search/post', 'TvChannelController@searchtvchannel')->name('tvchannel.search');
+  Route::post('/TVChannelStore','TvChannelController@store')->name('tvchannel.store');
+  Route::post('/TVChannelList/{id}/edit','TvChannelController@update')->name('tvchannel.update');
+  Route::post('/TVChannelList/{id}/delete', 'TvChannelController@destroy')->name('tvchannel.delete');
+
+  /***********************TV Channel End*************************************/
   
  //Route::get('/live','AdminController@live')->name('live');
   
