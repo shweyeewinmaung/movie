@@ -174,7 +174,7 @@ Route::prefix('admin')->group(function(){
   /***********************TV Channel Start*************************************/
   Route::get('/TVChannelList','TvchannelController@index')->name('tvchannel.list');
   Route::get('/TVChannelList/search/post', 'TvchannelController@searchtvchannel')->name('tvchannel.search');
-  Route::post('/TVChannelStore','TvChannelController@store')->name('tvchannel.store');
+  Route::post('/TVChannelStore','TvchannelController@store')->name('tvchannel.store');
   Route::post('/TVChannelList/{id}/edit','TvchannelController@update')->name('tvchannel.update');
   Route::post('/TVChannelList/{id}/delete', 'TvchannelController@destroy')->name('tvchannel.delete');
 
