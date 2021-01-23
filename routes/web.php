@@ -165,10 +165,10 @@ Route::prefix('admin')->group(function(){
   /***********************TV Category Start*************************************/
 
   Route::get('/TVCategoryList','TvCategoryController@index')->name('tvcategory.list');
-  Route::post('/TVCategoryStore','TVCategoryController@store')->name('tvcategory.store');
-  Route::get('/TVCategoryList/search/post', 'TVCategoryController@searchtvcategory')->name('tvcategory.search');
-  Route::post('/TVCategoryList/{id}/edit','TVCategoryController@update')->name('tvcategory.edit');
-  Route::post('/TVCategoryList/{id}/delete', 'TVCategoryController@destroy')->name('tvcategory.delete');
+  Route::post('/TVCategoryStore','TvCategoryController@store')->name('tvcategory.store');
+  Route::get('/TVCategoryList/search/post', 'TvCategoryController@searchtvcategory')->name('tvcategory.search');
+  Route::post('/TVCategoryList/{id}/edit','TvCategoryController@update')->name('tvcategory.edit');
+  Route::post('/TVCategoryList/{id}/delete', 'TvCategoryController@destroy')->name('tvcategory.delete');
 
   /***********************TV Category End*************************************/
   /***********************TV Channel Start*************************************/
