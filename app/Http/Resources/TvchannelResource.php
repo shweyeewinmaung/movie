@@ -19,7 +19,7 @@ class TvchannelResource extends JsonResource
             'name' => $this->name,
             'tvcategory_id' => $this->tvcategory_id,
             'tvcategory_name' => $this->tvcategories->name,
-            'channel_image' => $this->channel_image,
+            'channel_image' => asset('/images/tvchannels/'.$this->channel_image),
             'channel_api' => $this->channel_api,
             // 'created_at' => $this->created_at,
             // 'updated_at' => $this->updated_at,
